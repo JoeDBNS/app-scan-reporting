@@ -8,12 +8,17 @@ try:
       config = json.load(file)
 except:
     config = False
-    print("File not found (./config/main.json)")
+    print("ERROR: File not found (./config/main.json)")
 
 
 
 if (config != False):
-    request = requests.get("https://asoc.state.mi.us/srm/api/projects/1037/findings/count", headers={"Content-Type":"application/json", "API-Key":config['secret-token']})
+    try:
+        request = requests.get("https://asoc.state.mi.us/srm/api/projects/1037/findings/count", headers={"Content-Type":"application/json", "API-Key":config['secret-token']})
+    except:
+        request = False
+        print("ERROR: Must be on SOM network")
+
 
     print(request.text)
 
