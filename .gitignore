@@ -1,1 +1,6 @@
+/_ignore
+
+/_reports/*
+!/_reports/.gitkeep
+
 /config/*.json
