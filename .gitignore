@@ -4,3 +4,5 @@
 !/_reports/.gitkeep
 
 /config/*.json
+
+/__pycache__
