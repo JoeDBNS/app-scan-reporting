@@ -1,5 +1,5 @@
-import json
-import requests
+import json, requests
+import xlsx_maker as xm
 
 
 # Load config json from local config.json file
@@ -15,6 +15,16 @@ def LoadConfigFile():
 # Build URL string for specific SRM finding/result/issue
 def BuildIssueUrl(project_id, issue_id):
     return config['hosts']['srm'] + '/projects/' + str(project_id) + '/findings/' + str(issue_id)
+
+
+# Build string from issue source path array list
+def BuildFindingPathString(path):
+    path_as_string = path[0]
+
+    for item in path[1:-1]:
+        path_as_string += ' - ' + item
+
+    return path_as_string
 
 
 
@@ -71,6 +81,51 @@ def BuildResultAnalytics(results):
 
 
 
+def FormatFindingsForXlsx(data):
+    format_data = [[
+        'link',
+        'id',
+        'active',
+        'tool',
+        'label',
+        'severity',
+        'firstSeenOn',
+        'desc_path'
+    ]]
+
+    for row in data:
+        format_data.append([
+            BuildIssueUrl(row['projectId'], row['id']),
+            row['id'],
+            row['isActive'],
+            row['results'][0]['tool'],
+            row['descriptor']['name'],
+            row['severity']['name'],
+            row['firstSeenOn'],
+            BuildFindingPathString(row['results'][0]['toolHierarchy'])
+        ])
+
+    return format_data
+
+
+
+def DefineColorsForXlsx(data):
+    column_colors = []
+
+    for row in data:
+        if ('High' in row):
+            column_colors.append('f54842') # red
+        elif ('Medium' in row):
+            column_colors.append('f57842') # orange
+        elif ('Low' in row):
+            column_colors.append('f5d142') # yellow
+        else:
+            column_colors.append('ffffff') # white
+
+    return column_colors
+
+
+
 
 
 
@@ -80,11 +135,24 @@ config = LoadConfigFile()
 if (config != False):
     for project in config['project-list']:
 
+        print(project['name'] + ':  Get Findings - Start')
         project_findings = GetProjectFindings(project['id'])
+        print(project['name'] + ':  Get Findings - Complete')
 
-        for item in project_findings:
-            print(BuildIssueUrl(project['id'], item['id']))
-            # print(item["id"], '-', item["simpleDetectionType"])
+        if len(project_findings) != 0 and 'error' not in project_findings:
+            print(project['name'] + ':  Format Findings - Start')
+            project_findings_flat = FormatFindingsForXlsx(project_findings)
+            print(project['name'] + ':  Format Findings - Complete')
 
-        print(project['name'], len(project_findings))
-        print('\n\n')
+            print(project['name'] + ':  Define Colors - Start')
+            xlsx_colors = DefineColorsForXlsx(project_findings_flat)
+            print(project['name'] + ':  Define Colors - Complete')
+
+            print(project['name'] + ':  Build - Start')
+            xm.BuildXlsxFile(project['name'], project_findings_flat, xlsx_colors)
+            print(project['name'] + ':  Build - Complete')
+
+            print(project['name'] + ':  FINISHED\n')
+
+        else:
+            print('ERROR - zero findings or request error')
