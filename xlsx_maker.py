@@ -1,4 +1,9 @@
-import os
+# Column filters
+# https://openpyxl.readthedocs.io/en/stable/filters.html#using-filters-and-sorts
+
+
+
+import os, datetime as dt
 from openpyxl import Workbook
 from openpyxl.worksheet.filters import (
     FilterColumn,
@@ -7,68 +12,57 @@ from openpyxl.worksheet.filters import (
     DateGroupItem,
     Filters,
 )
-
-
-wb = Workbook()
-ws = wb.active
-
-
-# data = [
-#     ["Fruit", "Quantity"],
-#     ["Kiwi", 3],
-#     ["Grape", 15],
-#     ["Apple", 3],
-#     ["Peach", 3],
-#     ["Pomegranate", 3],
-#     ["Pear", 3],
-#     ["Tangerine", 3],
-#     ["Blueberry", 3],
-#     ["Mango", 3],
-#     ["Watermelon", 3],
-#     ["Blackberry", 3],
-#     ["Orange", 3],
-#     ["Raspberry", 3],
-#     ["Banana", 3]
-# ]
-
-# for r in data:
-#     ws.append(r)
+from openpyxl.styles import PatternFill
 
 
 
+def Setup():
+    wb = Workbook()
+    ws = wb.active
+    return wb, ws
 
 
-# Data can be assigned directly to cells
-ws['A1'] = 42
+def SaveFile(wb, name):
+    # YYYYMMDD
+    timestamp_today = str(dt.date.today()).replace('-', '')
 
-# Rows can also be appended
-ws.append([1, 2, 3])
+    reports_path = './_reports/' + timestamp_today
 
-# Python types will automatically be converted
-import datetime
-ws['A2'] = datetime.datetime.now()
+    if not os.path.exists(reports_path):
+        os.makedirs(reports_path)
 
-
-
+    wb.save(reports_path + '/' + name + '.xlsx')
 
 
-
-# YYYYMMDD
-timestamp_today = str(datetime.date.today()).replace('-', '')
-
-reports_path = './_reports/' + timestamp_today
-
-if not os.path.exists(reports_path):
-    os.makedirs(reports_path)
-
-wb.save(reports_path + '/test.xlsx')
+def SetColumnColors(ws, column_colors):
+    for idx, row in enumerate(ws.rows):
+        for col in row:
+            ws[col.coordinate].fill = PatternFill(start_color=column_colors[idx], end_color=column_colors[idx], fill_type='solid')
 
 
+def SetColumnSize(ws):
+    for col in ws.columns:
+        max_length = 6
+        column_letter = col[0].column_letter
+
+        for cell in col:
+            try:
+                if len(str(cell.value)) > max_length:
+                    max_length = len(cell.value)
+            except:
+                pass
+
+        adjusted_width = (max_length + 2)
+        ws.column_dimensions[column_letter].width = adjusted_width
 
 
+def BuildXlsxFile(name, data, column_colors):
+    wb, ws = Setup()
 
-# Column filters
-# https://openpyxl.readthedocs.io/en/stable/filters.html#using-filters-and-sorts
+    for row in data:
+        ws.append(row)
 
-# Cell colors
-# https://openpyxl.readthedocs.io/en/stable/styles.html
+    SetColumnColors(ws, column_colors)
+    SetColumnSize(ws)
+
+    SaveFile(wb, name)
