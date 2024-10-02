@@ -46,7 +46,7 @@ def SetColumnColors(ws, column_colors):
 
 def SetColumnSize(ws):
     for col in ws.columns:
-        max_length = 6
+        max_length = 7
         column_letter = col[0].column_letter
 
         for cell in col:
