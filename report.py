@@ -2,7 +2,7 @@ import json
 import requests
 
 
-
+# Load config json from local config.json file
 def LoadConfigFile():
     try:
         with open('./config/main.json') as file:
@@ -12,7 +12,7 @@ def LoadConfigFile():
         return False
 
 
-
+# Build URL string for specific SRM finding/result/issue
 def BuildIssueUrl(project_id, issue_id):
     return config['hosts']['srm'] + '/projects/' + str(project_id) + '/findings/' + str(issue_id)
 
@@ -61,7 +61,7 @@ def GetProjectFindings(project_id):
     return project_response_data
 
 
-
+# WIP - nice to have
 def BuildResultAnalytics(results):
     analytics = {
 
