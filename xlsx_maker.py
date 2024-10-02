@@ -1,9 +1,6 @@
 # Column filters
 # https://openpyxl.readthedocs.io/en/stable/filters.html#using-filters-and-sorts
 
-# set hyperlinks
-# https://stackoverflow.com/questions/39077661/adding-hyperlinks-in-some-cells-openpyxl
-
 
 
 import os, datetime as dt
@@ -59,11 +56,24 @@ def SetColumnSize(ws):
         ws.column_dimensions[column_letter].width = adjusted_width
 
 
+def SetHyperlinks(ws):
+    for col in ws.columns:
+        column_letter = col[0].column_letter
+
+        # hard coding column with hyperlinks
+        if(column_letter == 'A'):
+            for cell in col[1:]:
+                cell.hyperlink = cell.value
+                cell.style = "Hyperlink"
+
+
 def BuildXlsxFile(name, data, column_colors):
     wb, ws = Setup()
 
     for row in data:
         ws.append(row)
+
+    SetHyperlinks(ws)
 
     SetColumnColors(ws, column_colors)
     SetColumnSize(ws)
