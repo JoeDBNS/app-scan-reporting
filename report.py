@@ -85,10 +85,10 @@ def FormatFindingsForXlsx(data):
     format_data = [[
         'link',
         'id',
-        'active',
+        'severity',
+        'type',
         'tool',
         'label',
-        'severity',
         'firstSeenOn',
         'desc_path'
     ]]
@@ -97,10 +97,10 @@ def FormatFindingsForXlsx(data):
         format_data.append([
             BuildIssueUrl(row['projectId'], row['id']),
             row['id'],
-            row['isActive'],
+            row['severity']['name'],
+            row['simpleDetectionType'],
             row['results'][0]['tool'],
             row['descriptor']['name'],
-            row['severity']['name'],
             row['firstSeenOn'],
             BuildFindingPathString(row['results'][0]['toolHierarchy'])
         ])
