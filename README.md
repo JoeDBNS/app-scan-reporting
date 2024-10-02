@@ -1,5 +1,8 @@
 <!-- config file layout -->
 {
+    "hosts": {
+        "srm": ""
+    },
     "secret-token": "",
     "project-list": [
         {
