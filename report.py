@@ -71,11 +71,57 @@ def GetProjectFindings(project_id):
     return project_response_data
 
 
-# WIP - nice to have
-def BuildResultAnalytics(results):
-    analytics = {
 
+def BuildResultAnalytics(results):
+    analytics_build = {
+        'totals': {
+            'High': 0,
+            'Medium': 0,
+            'Low': 0
+        },
+        'dynamic': {
+            'High': 0,
+            'Medium': 0,
+            'Low': 0
+        },
+        'static': {
+            'High': 0,
+            'Medium': 0,
+            'Low': 0
+        },
+        'component': {
+            'High': 0,
+            'Medium': 0,
+            'Low': 0
+        }
     }
+
+    for row in results[1:]:
+        analytics_build[row[3]][row[2]] += 1
+
+    analytics_build['totals']['High'] = analytics_build['dynamic']['High'] + analytics_build['static']['High'] + analytics_build['component']['High']
+    analytics_build['totals']['Medium'] = analytics_build['dynamic']['Medium'] + analytics_build['static']['Medium'] + analytics_build['component']['Medium']
+    analytics_build['totals']['Low'] = analytics_build['dynamic']['Low'] + analytics_build['static']['Low'] + analytics_build['component']['Low']
+
+    analytics = [
+        ['Totals'],
+        ['', 'High', analytics_build['totals']['High']],
+        ['', 'Meduim', analytics_build['totals']['Medium']],
+        ['', 'Low', analytics_build['totals']['Low']],
+        ['Scan Types'],
+        ['', 'Dynamic'],
+        ['', '', 'High', analytics_build['dynamic']['High']],
+        ['', '', 'Meduim', analytics_build['dynamic']['Medium']],
+        ['', '', 'Low', analytics_build['dynamic']['Low']],
+        ['', 'Static'],
+        ['', '', 'High', analytics_build['static']['High']],
+        ['', '', 'Meduim', analytics_build['static']['Medium']],
+        ['', '', 'Low', analytics_build['static']['Low']],
+        ['', 'Component'],
+        ['', '', 'High', analytics_build['component']['High']],
+        ['', '', 'Meduim', analytics_build['component']['Medium']],
+        ['', '', 'Low', analytics_build['component']['Low']]
+    ]
 
     return analytics
 
@@ -145,11 +191,15 @@ if (config != False):
             print(project['name'] + ':  Format Findings - Complete')
 
             print(project['name'] + ':  Define Colors - Start')
-            xlsx_colors = DefineColorsForXlsx(project_findings_flat)
+            project_findings_xlsx_colors = DefineColorsForXlsx(project_findings_flat)
             print(project['name'] + ':  Define Colors - Complete')
 
+            print(project['name'] + ':  Analytics - Start')
+            project_analytics = BuildResultAnalytics(project_findings_flat)
+            print(project['name'] + ':  Analytics - Complete')
+
             print(project['name'] + ':  Build - Start')
-            xm.BuildXlsxFile(project['name'], project_findings_flat, xlsx_colors)
+            xm.BuildXlsxFile(project['name'], project_findings_flat, project_findings_xlsx_colors, project_analytics)
             print(project['name'] + ':  Build - Complete')
 
             print(project['name'] + ':  FINISHED\n')
