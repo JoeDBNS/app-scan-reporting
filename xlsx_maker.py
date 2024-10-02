@@ -18,8 +18,12 @@ from openpyxl.styles import PatternFill
 
 def Setup():
     wb = Workbook()
-    ws = wb.active
-    return wb, ws
+    wb.remove(wb.active)
+    wb.create_sheet('Analytics')
+    wb.create_sheet('Findings')
+    ws_analytics = wb["Analytics"]
+    ws_findings = wb["Findings"]
+    return wb, ws_analytics, ws_findings
 
 
 def SaveFile(wb, name):
@@ -56,8 +60,8 @@ def SetColumnSize(ws):
         ws.column_dimensions[column_letter].width = adjusted_width
 
 
-def SetHyperlinks(ws):
-    for col in ws.columns:
+def SetFindingsHyperlinks(ws_findings):
+    for col in ws_findings.columns:
         column_letter = col[0].column_letter
 
         # hard coding column with hyperlinks
@@ -67,15 +71,19 @@ def SetHyperlinks(ws):
                 cell.style = "Hyperlink"
 
 
-def BuildXlsxFile(name, data, column_colors):
-    wb, ws = Setup()
+def BuildXlsxFile(name, data_findings, findings_column_colors, data_analytics):
+    wb, ws_analytics, ws_findings = Setup()
 
-    for row in data:
-        ws.append(row)
+    for row in data_analytics:
+        ws_analytics.append(row)
 
-    SetHyperlinks(ws)
+    SetColumnSize(ws_analytics)
 
-    SetColumnColors(ws, column_colors)
-    SetColumnSize(ws)
+    for row in data_findings:
+        ws_findings.append(row)
+
+    SetFindingsHyperlinks(ws_findings)
+    SetColumnColors(ws_findings, findings_column_colors)
+    SetColumnSize(ws_findings)
 
     SaveFile(wb, name)
