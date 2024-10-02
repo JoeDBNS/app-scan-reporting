@@ -1,6 +1,9 @@
 # Column filters
 # https://openpyxl.readthedocs.io/en/stable/filters.html#using-filters-and-sorts
 
+# set hyperlinks
+# https://stackoverflow.com/questions/39077661/adding-hyperlinks-in-some-cells-openpyxl
+
 
 
 import os, datetime as dt
