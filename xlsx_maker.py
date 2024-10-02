@@ -6,13 +6,16 @@
 import os, datetime as dt
 from openpyxl import Workbook
 from openpyxl.worksheet.filters import (
-    FilterColumn,
     CustomFilter,
     CustomFilters,
     DateGroupItem,
+    FilterColumn,
     Filters,
 )
-from openpyxl.styles import PatternFill
+from openpyxl.styles import (
+    Alignment,
+    PatternFill
+)
 
 
 
@@ -50,6 +53,8 @@ def SetColumnSize(ws):
         column_letter = col[0].column_letter
 
         for cell in col:
+            cell.alignment = Alignment(horizontal='left')
+
             try:
                 if len(str(cell.value)) > max_length:
                     max_length = len(cell.value)
