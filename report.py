@@ -21,7 +21,7 @@ def BuildIssueUrl(project_id, issue_id):
 def BuildFindingPathString(path):
     path_as_string = path[0]
 
-    for item in path[1:-1]:
+    for item in path[1:]:
         path_as_string += ' - ' + item
 
     return path_as_string
