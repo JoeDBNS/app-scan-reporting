@@ -199,11 +199,7 @@ if (config != False):
             project_analytics = BuildResultAnalytics(project_findings_flat)
             print(project['name'] + ':  Analytics - Complete')
 
-            print(project['name'] + ':  Build - Start')
-            xm.BuildXlsxFile(project['name'], project_findings_flat, project_findings_xlsx_colors, project_analytics)
-            print(project['name'] + ':  Build - Complete')
-
-            print(project['name'] + ':  FINISHED\n')
+                file_path = xm.BuildXlsxFile(project['name'], project_findings_flat, project_findings_xlsx_colors, project_analytics)
 
         else:
             print('ERROR - zero findings or request error')

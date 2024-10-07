@@ -40,6 +40,8 @@ def SaveFile(wb, name):
 
     wb.save(reports_path + '/' + name + '.xlsx')
 
+    return (reports_path + '/' + name + '.xlsx')
+
 
 def SetColumnColors(ws, column_colors):
     for idx, row in enumerate(ws.rows):
@@ -91,4 +93,4 @@ def BuildXlsxFile(name, data_findings, findings_column_colors, data_analytics):
     SetColumnColors(ws_findings, findings_column_colors)
     SetColumnSize(ws_findings)
 
-    SaveFile(wb, name)
+    return SaveFile(wb, name)
