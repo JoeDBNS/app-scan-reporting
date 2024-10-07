@@ -53,9 +53,20 @@ def Test():
     codes = [0, 1, 2, 3, 4, 7, 8, 9, 21, 30, 90, 31, 91, 32, 92, 33, 93, 34, 94, 35, 95, 36, 96, 37, 97, 40, 100, 41, 101, 42, 102, 43, 103, 44, 104, 45, 105, 46, 106, 47, 107]
 
     for code in codes:
-        print("\33[32m \\33[32m \033[0m")
+        print("\33[" + str(code) + "m\\33[" + str(code) + "m\033[0m")
 
 
-# Test()
+def Info(content):
+    print(style.WHITE + content + style.END)
 
-# print(style.RED + "Error, does not compute!" + style.END)
+
+def Pass(content):
+    print(style.GREEN + content + style.END)
+
+
+def Warn(content):
+    print(style.YELLOW + content + style.END)
+
+
+def Error(content):
+    print(style.RED + content + style.END)

@@ -182,41 +182,41 @@ def DefineColorsForXlsx(data):
 
 print('\n\n')
 
-os.system("")
+os.system('')
 
 config = LoadConfigFile()
 
 if (config != False):
-    print(con.style.GREEN + "Config File Loaded" + con.style.END)
+    con.Pass('Config File Loaded')
 
     for project in config['project-list']:
-        print('\n\n' + con.style.WHITE + project['name'] + con.style.END)
+        print('\n\n')
+        con.Info(project['name'])
 
-        print('LOAD:\tGET FINDINGS')
+        con.Info('LOAD:\tGET FINDINGS')
         project_findings = GetProjectFindings(project['id'])
 
         if (project_findings != False):
-            print("\033[F" + con.style.GREEN + "DONE\tGET FINDINGS" + con.style.END)
+            con.Pass('\033[FDONE\tGET FINDINGS')
 
             if len(project_findings) != 0:
-
-                print('LOAD:\tFORMAT FINDINGS')
+                con.Info('LOAD:\tFORMAT FINDINGS')
                 project_findings_flat = FormatFindingsForXlsx(project_findings)
-                print("\033[F" + con.style.GREEN + "DONE\tFORMAT FINDINGS" + con.style.END)
+                con.Pass('\033[FDONE\tFORMAT FINDINGS')
 
-                print('LOAD:\tDEFINE COLORS')
+                con.Info('LOAD:\tDEFINE COLORS')
                 project_findings_xlsx_colors = DefineColorsForXlsx(project_findings_flat)
-                print("\033[F" + con.style.GREEN + "DONE\tDEFINE COLORS" + con.style.END)
+                con.Pass('\033[FDONE\tDEFINE COLORS')
 
-                print('LOAD:\tBUILD ANALYTICS')
+                con.Info('LOAD:\tBUILD ANALYTICS')
                 project_analytics = BuildResultAnalytics(project_findings_flat)
-                print("\033[F" + con.style.GREEN + "DONE\tBUILD ANALYTICS" + con.style.END)
+                con.Pass('\033[FDONE\tBUILD ANALYTICS')
 
-                print('LOAD:\tBUILD FILE')
+                con.Info('LOAD:\tBUILD FILE')
                 file_path = xm.BuildXlsxFile(project['name'], project_findings_flat, project_findings_xlsx_colors, project_analytics)
-                print("\033[F" + con.style.GREEN + "DONE\tBUILD FILE" + con.style.END)
+                con.Pass('\033[FDONE\tBUILD FILE')
 
-                print('LOAD:\tSENDING EMAILS')
+                con.Info('LOAD:\tSENDING EMAILS')
                 try:
                     for contact in project['contacts']:
                         eml.SendEmailWithAttachment(
@@ -226,15 +226,15 @@ if (config != False):
                             attachment_path=file_path,
                             attachment_name=project['name']
                         )
-                    print("\033[F" + con.style.GREEN + "DONE\tSENDING EMAILS" + con.style.END)
+                    con.Pass('\033[FDONE\tSENDING EMAILS')
 
                 except:
-                    print("\033[F" + con.style.RED + "ERROR:\tSENDING EMAILS" + con.style.END)
+                    con.Error('\033[FERROR:\tSENDING EMAILS')
 
             else:
-                print("\033[F" + con.style.RED + "ERROR:\tZERO FINDINGS" + con.style.END)
+                con.Error('\033[FERROR:\tZERO FINDINGS')
 
         else:
-            print("\033[F" + con.style.RED + "ERROR:\tGET FINDINGS" + con.style.END)
+            con.Error('\033[FERROR:\tGET FINDINGS')
 else:
-    print(con.style.RED + "ERROR:\tLOADING CONFIG FILE" + con.style.END)
+    con.Error('\033[FERROR:\tLOADING CONFIG FILE')
