@@ -1,5 +1,6 @@
 import json, requests, os
 import xlsx_maker as xm
+import email as eml
 import console as con
 
 
@@ -215,6 +216,20 @@ if (config != False):
                 file_path = xm.BuildXlsxFile(project['name'], project_findings_flat, project_findings_xlsx_colors, project_analytics)
                 print("\033[F" + con.style.GREEN + "DONE\tBUILD FILE" + con.style.END)
 
+                print('LOAD:\tSENDING EMAILS')
+                try:
+                    for contact in project['contacts']:
+                        eml.SendEmailWithAttachment(
+                            recipient=contact['email'],
+                            subject=f'AppScan Results: {project['name']}',
+                            body='',
+                            attachment_path=file_path,
+                            attachment_name=project['name']
+                        )
+                    print("\033[F" + con.style.GREEN + "DONE\tSENDING EMAILS" + con.style.END)
+
+                except:
+                    print("\033[F" + con.style.RED + "ERROR:\tSENDING EMAILS" + con.style.END)
 
             else:
                 print("\033[F" + con.style.RED + "ERROR:\tZERO FINDINGS" + con.style.END)
