@@ -1,5 +1,6 @@
 import json, requests
 import xlsx_maker as xm
+import console as con
 
 
 # Load config json from local config.json file
