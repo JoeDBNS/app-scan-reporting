@@ -1,4 +1,4 @@
-import json, requests
+import json, requests, os
 import xlsx_maker as xm
 import console as con
 
@@ -9,13 +9,14 @@ def LoadConfigFile():
         with open('./config/main.json') as file:
             return json.load(file)
     except:
-        print('ERROR - LoadConfigFile()')
         return False
+
 
 
 # Build URL string for specific SRM finding/result/issue
 def BuildIssueUrl(project_id, issue_id):
     return config['hosts']['srm'] + '/projects/' + str(project_id) + '/findings/' + str(issue_id)
+
 
 
 # Build string from issue source path array list
@@ -65,9 +66,11 @@ def GetProjectFindings(project_id):
         project_request = requests.post(project_request_url, headers={'Content-Type':'application/json', 'API-Key':config['secret-token']}, json=project_request_data)
         project_response_data = json.loads(project_request.text)
 
+        if ('error' not in project_response_data):
+            project_response_data = False
+
     except:
-        project_response_data = []
-        print('ERROR - GetProjectFindings(): Request Error')
+        project_response_data = False
 
     return project_response_data
 
@@ -176,30 +179,47 @@ def DefineColorsForXlsx(data):
 
 
 
+print('\n\n')
+
+os.system("")
 
 config = LoadConfigFile()
 
 if (config != False):
+    print(con.style.GREEN + "Config File Loaded" + con.style.END)
+
     for project in config['project-list']:
+        print('\n\n' + con.style.WHITE + project['name'] + con.style.END)
 
-        print(project['name'] + ':  Get Findings - Start')
+        print('LOAD:\tGET FINDINGS')
         project_findings = GetProjectFindings(project['id'])
-        print(project['name'] + ':  Get Findings - Complete')
 
-        if len(project_findings) != 0 and 'error' not in project_findings:
-            print(project['name'] + ':  Format Findings - Start')
-            project_findings_flat = FormatFindingsForXlsx(project_findings)
-            print(project['name'] + ':  Format Findings - Complete')
+        if (project_findings != False):
+            print("\033[F" + con.style.GREEN + "DONE\tGET FINDINGS" + con.style.END)
 
-            print(project['name'] + ':  Define Colors - Start')
-            project_findings_xlsx_colors = DefineColorsForXlsx(project_findings_flat)
-            print(project['name'] + ':  Define Colors - Complete')
+            if len(project_findings) != 0:
 
-            print(project['name'] + ':  Analytics - Start')
-            project_analytics = BuildResultAnalytics(project_findings_flat)
-            print(project['name'] + ':  Analytics - Complete')
+                print('LOAD:\tFORMAT FINDINGS')
+                project_findings_flat = FormatFindingsForXlsx(project_findings)
+                print("\033[F" + con.style.GREEN + "DONE\tFORMAT FINDINGS" + con.style.END)
 
+                print('LOAD:\tDEFINE COLORS')
+                project_findings_xlsx_colors = DefineColorsForXlsx(project_findings_flat)
+                print("\033[F" + con.style.GREEN + "DONE\tDEFINE COLORS" + con.style.END)
+
+                print('LOAD:\tBUILD ANALYTICS')
+                project_analytics = BuildResultAnalytics(project_findings_flat)
+                print("\033[F" + con.style.GREEN + "DONE\tBUILD ANALYTICS" + con.style.END)
+
+                print('LOAD:\tBUILD FILE')
                 file_path = xm.BuildXlsxFile(project['name'], project_findings_flat, project_findings_xlsx_colors, project_analytics)
+                print("\033[F" + con.style.GREEN + "DONE\tBUILD FILE" + con.style.END)
+
+
+            else:
+                print("\033[F" + con.style.RED + "ERROR:\tZERO FINDINGS" + con.style.END)
 
         else:
-            print('ERROR - zero findings or request error')
+            print("\033[F" + con.style.RED + "ERROR:\tGET FINDINGS" + con.style.END)
+else:
+    print(con.style.RED + "ERROR:\tLOADING CONFIG FILE" + con.style.END)
