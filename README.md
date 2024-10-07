@@ -1,5 +1,13 @@
 <!-- config file layout -->
 {
+    "smtp": {
+        "host": "",
+        "port": 0,
+        "sender": {
+            "name": "",
+            "email": ""
+        }
+    },
     "hosts": {
         "srm": ""
     },
