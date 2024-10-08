@@ -1,0 +1,14 @@
+{
+    "name": "app-scan-reporting",
+    "version": "1.0.0",
+    "description": "<!-- config file layout -->\r {\r     \"smtp\": {\r         \"host\": \"\",\r         \"port\": 0,\r         \"sender\": {\r             \"name\": \"\",\r             \"email\": \"\"\r         }\r     },\r     \"hosts\": {\r         \"srm\": \"\"\r     },\r     \"secret-token\": \"\",\r     \"project-list\": [\r         {\r             \"id\": 0,\r             \"name\": \"\",\r             \"contacts\": [\r                 {\r                     \"role\": \"\",\r                     \"name\": \"\",\r                     \"email\": \"\"\r                 }\r             ]\r         }\r     ]\r }",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^32.1.2"
+    }
+}
