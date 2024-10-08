@@ -12,7 +12,7 @@
         "srm": ""
     },
     "secret-token": "",
-    "project-list": [
+    "projects": [
         {
             "id": 0,
             "name": "",

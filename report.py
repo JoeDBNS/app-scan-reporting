@@ -189,7 +189,7 @@ config = LoadConfigFile()
 if (config != False):
     con.Pass('Config File Loaded')
 
-    for project in config['project-list']:
+    for project in config['projects']:
         print('\n\n')
         con.Info(project['name'])
 
