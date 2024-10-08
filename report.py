@@ -1,7 +1,7 @@
 import json, requests, os
-import xlsx_maker as xm
-import email as eml
-import console as con
+import module_xlsx_maker as xm
+import module_email as eml
+import module_console as con
 
 
 # Load config json from local config.json file
