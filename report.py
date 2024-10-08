@@ -224,7 +224,7 @@ if (config != False):
                             subject=f'AppScan Results: {project['name']}',
                             body='',
                             attachment_path=file_path,
-                            attachment_name=project['name']
+                            attachment_name=project['name'] + '.xlsx'
                         )
                     con.Pass('\033[FDONE\tSENDING EMAILS')
 
