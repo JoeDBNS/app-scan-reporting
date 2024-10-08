@@ -10,7 +10,7 @@ def LoadConfigFile():
     try:
         with open('./config/main.json') as file:
             return json.load(file)
-    except:
+    except Exception as error:
         print('ERROR - LoadConfigFile()')
         return False
 

@@ -9,7 +9,7 @@ def LoadConfigFile():
     try:
         with open('./config/main.json') as file:
             return json.load(file)
-    except:
+    except Exception as error:
         return False
 
 
@@ -38,7 +38,7 @@ def GetProjectList():
         projects_request = requests.get(projects_request_url, headers={'Content-Type':'application/json', 'API-Key':config['secret-token']})
         projects_response_data = json.loads(projects_request.text)
 
-    except:
+    except Exception as error:
         projects_response_data = []
         print('ERROR - GetProjectList()')
 
@@ -70,7 +70,7 @@ def GetProjectFindings(project_id):
         if ('error' in project_response_data):
             project_response_data = False
 
-    except:
+    except Exception as error:
         project_response_data = False
 
     return project_response_data
@@ -228,7 +228,7 @@ if (config != False):
                         )
                     con.Pass('\033[FDONE\tSENDING EMAILS')
 
-                except:
+                except Exception as error:
                     con.Error('\033[FERROR:\tSENDING EMAILS')
 
             else:

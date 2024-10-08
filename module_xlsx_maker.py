@@ -60,7 +60,7 @@ def SetColumnSize(ws):
             try:
                 if len(str(cell.value)) > max_length:
                     max_length = len(cell.value)
-            except:
+            except Exception as error:
                 pass
 
         adjusted_width = (max_length + 2)

@@ -7,7 +7,7 @@ def LoadConfigFile():
     try:
         with open('./config/main.json') as file:
             return json.load(file)
-    except:
+    except Exception as error:
         return False
 
 
@@ -80,7 +80,7 @@ try:
         print(PrepareReport(json.dumps(config, indent=4)))
         con.Pass('Config File Was Verified and Passed')
 
-except:
+except Exception as error:
     con.Error('invalid config format')
 
 
