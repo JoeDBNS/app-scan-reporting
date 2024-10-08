@@ -64,8 +64,31 @@ try:
             issues_found += 1
             config['secret-token'] = '__BAD__'
 
-        for project in config['project-list']:
-            print(project)
+        for i, project in enumerate(config['projects']):
+            if (project['id'] != ''):
+                config['projects'][i]['id'] = '__GOOD__'
+            else:
+                issues_found += 1
+                config['projects'][i]['id'] = '__BAD__'
+
+            if (project['name'] != ''):
+                config['projects'][i]['name'] = '__GOOD__'
+            else:
+                issues_found += 1
+                config['projects'][i]['name'] = '__BAD__'
+
+            for i, contact in enumerate(project['contacts']):
+                if (project['id'] != ''):
+                    config['projects'][i]['id'] = '__GOOD__'
+                else:
+                    issues_found += 1
+                    config['projects'][i]['id'] = '__BAD__'
+
+                if (project['name'] != ''):
+                    config['projects'][i]['name'] = '__GOOD__'
+                else:
+                    issues_found += 1
+                    config['projects'][i]['name'] = '__BAD__'
 
 
     else:
