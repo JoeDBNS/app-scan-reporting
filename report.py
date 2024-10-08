@@ -67,7 +67,7 @@ def GetProjectFindings(project_id):
         project_request = requests.post(project_request_url, headers={'Content-Type':'application/json', 'API-Key':config['secret-token']}, json=project_request_data)
         project_response_data = json.loads(project_request.text)
 
-        if ('error' not in project_response_data):
+        if ('error' in project_response_data):
             project_response_data = False
 
     except:
