@@ -111,20 +111,20 @@ def BuildResultAnalytics(results):
     analytics = [
         ['Totals'],
         ['', 'High', analytics_build['totals']['High']],
-        ['', 'Meduim', analytics_build['totals']['Medium']],
+        ['', 'Medium', analytics_build['totals']['Medium']],
         ['', 'Low', analytics_build['totals']['Low']],
         ['Scan Types'],
         ['', 'Dynamic'],
         ['', '', 'High', analytics_build['dynamic']['High']],
-        ['', '', 'Meduim', analytics_build['dynamic']['Medium']],
+        ['', '', 'Medium', analytics_build['dynamic']['Medium']],
         ['', '', 'Low', analytics_build['dynamic']['Low']],
         ['', 'Static'],
         ['', '', 'High', analytics_build['static']['High']],
-        ['', '', 'Meduim', analytics_build['static']['Medium']],
+        ['', '', 'Medium', analytics_build['static']['Medium']],
         ['', '', 'Low', analytics_build['static']['Low']],
         ['', 'Component'],
         ['', '', 'High', analytics_build['component']['High']],
-        ['', '', 'Meduim', analytics_build['component']['Medium']],
+        ['', '', 'Medium', analytics_build['component']['Medium']],
         ['', '', 'Low', analytics_build['component']['Low']]
     ]
 
