@@ -3,6 +3,6 @@
 /_reports/*
 !/_reports/.gitkeep
 
-/config/*.json
+/src/config/*.json
 
-/__pycache__
+__pycache__
