@@ -1,1 +1,1 @@
-python './report.py'
+python './src/run_reports.py'

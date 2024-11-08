@@ -1,14 +1,9 @@
-import json, os
+import json, os, subprocess
 import module_console as con
 
 
-# Load config json from local config.json file
-def LoadConfigFile():
-    try:
-        with open('./config/main.json') as file:
-            return json.load(file)
-    except Exception as error:
-        return False
+def VerifyNetwork():
+    connected_ssid = subprocess.check_output("powershell.exe (get-netconnectionProfile).Name", shell=True).strip().split('\\n')[-1]
 
 
 def PrepareReport(report):
@@ -16,10 +11,8 @@ def PrepareReport(report):
     return report
 
 
-def VerifyConfigFile():
+def VerifyConfigFile(config):
     os.system('')
-
-    config = LoadConfigFile()
 
     issues_found = 0
 

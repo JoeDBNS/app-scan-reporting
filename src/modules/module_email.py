@@ -5,19 +5,7 @@ from email.mime.application import MIMEApplication
 from email.utils import formataddr
 
 
-# Load config json from local config.json file
-def LoadConfigFile():
-    try:
-        with open('./config/main.json') as file:
-            return json.load(file)
-    except Exception as error:
-        print('ERROR - LoadConfigFile()')
-        return False
-
-
-def SendEmailWithAttachment(recipient, subject, body, attachment_path, attachment_name):
-    config = LoadConfigFile()
-
+def SendEmailWithAttachment(config, recipient, subject, body, attachment_path, attachment_name):
     message = MIMEMultipart()
     message['Subject'] = subject
     message['To'] = recipient
