@@ -1,11 +1,17 @@
-import json, os, subprocess
-import module_console as con
+import json, subprocess
+import modules.module_console as con
 
 
 def VerifyNetwork():
-    connected_network = subprocess.check_output("powershell.exe (get-netconnectionProfile).Name", shell=True).strip()
-    if ("ad.som.mi.us" not in connected_network):
-        print("NOT ON SOM NETWORK")
+    issues_found = 0
+
+    connected_network = str(subprocess.check_output("powershell.exe (get-netconnectionProfile).Name", shell=True).strip()).split("\\n")
+
+    if (connected_network != "ad.som.mi.us"):
+        con.Error('NOT ON SOM NETWORK')
+        issues_found += 1
+    
+    return issues_found
 
 
 def PrepareReport(report):
@@ -14,8 +20,6 @@ def PrepareReport(report):
 
 
 def VerifyConfigFile(config):
-    os.system('')
-
     issues_found = 0
 
     try:
@@ -111,3 +115,7 @@ def VerifyConfigFile(config):
 
     except Exception as error:
         con.Error('invalid config format')
+        issues_found += 1
+
+
+    return issues_found
