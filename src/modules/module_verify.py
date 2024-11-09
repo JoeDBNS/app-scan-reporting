@@ -3,7 +3,9 @@ import module_console as con
 
 
 def VerifyNetwork():
-    connected_ssid = subprocess.check_output("powershell.exe (get-netconnectionProfile).Name", shell=True).strip().split('\\n')[-1]
+    connected_network = subprocess.check_output("powershell.exe (get-netconnectionProfile).Name", shell=True).strip()
+    if ("ad.som.mi.us" not in connected_network):
+        print("NOT ON SOM NETWORK")
 
 
 def PrepareReport(report):
