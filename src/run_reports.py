@@ -28,7 +28,9 @@ def VerifyToolSetup(config):
         return False
 
 
+# Required to initialize escape characters in terminal
 os.system('')
+
 print('\n\n')
 
 config = LoadConfigFile()
