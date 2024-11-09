@@ -17,10 +17,10 @@ def LoadConfigFile():
         return False
 
 
-def VerifyToolSetup():
+def VerifyToolSetup(config):
     issue_count = 0
+    issue_count += verify.VerifyConfigFile(config)
     issue_count += verify.VerifyNetwork()
-    issue_count += verify.VerifyConfigFile()
 
     if (issue_count == 0):
         return True
@@ -34,9 +34,9 @@ print('\n\n')
 config = LoadConfigFile()
 
 if (config != False):
-    if (VerifyToolSetup() == True):
+    con.Pass('Config File Loaded')
 
-        con.Pass('Config File Loaded')
+    if (VerifyToolSetup(config) == True):
 
         for project in config['projects']:
             print('\n')

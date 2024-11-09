@@ -8,7 +8,7 @@ def VerifyNetwork():
     connected_network = str(subprocess.check_output("powershell.exe (get-netconnectionProfile).Name", shell=True).strip()).split("\\n")
 
     if (connected_network != "ad.som.mi.us"):
-        con.Error('NOT ON SOM NETWORK')
+        con.Error('\nNOT ON SOM NETWORK')
         issues_found += 1
     
     return issues_found
@@ -107,10 +107,10 @@ def VerifyConfigFile(config):
 
 
         if (issues_found != 0):
-            print(PrepareReport(json.dumps(config, indent=4)))
+            print('\n', PrepareReport(json.dumps(config, indent=4)))
 
         else:
-            print(PrepareReport(json.dumps(config, indent=4)))
+            print('\n', PrepareReport(json.dumps(config, indent=4)))
             con.Pass('\nConfig File Was Verified and Passed')
 
     except Exception as error:
