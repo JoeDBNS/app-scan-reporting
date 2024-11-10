@@ -77,5 +77,8 @@ if (config != False):
             except Exception as error:
                 con.Error('\033[FERROR:\tSENDING EMAILS')
 
+    else:
+        con.Error('\033[FERROR:\tISSUES WITH TOOL SETUP')
+
 else:
     con.Error('\033[FERROR:\tLOADING CONFIG FILE')
