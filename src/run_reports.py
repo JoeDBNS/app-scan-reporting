@@ -50,7 +50,7 @@ if (config != False):
             con.Pass('\033[FDONE\tBUILD ANALYTICS')
 
             wb_content = {
-                'name': 'Application_Vulnerability_Report',
+                'name': 'AVR - ' + project['name'],
                 'sheets': [
                     analytics_worksheet,
                     findings_worksheet
