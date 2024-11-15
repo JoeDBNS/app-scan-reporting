@@ -32,7 +32,7 @@ $config_text = @'
                 {
                     "role": "",
                     "name": "",
-                    "email": ""
+                    "emails": []
                 }
             ]
         }

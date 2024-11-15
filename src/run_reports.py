@@ -66,7 +66,7 @@ if (config != False):
                 for contact in project['contacts']:
                     eml.SendEmailWithAttachment(
                         config,
-                        recipient=contact['email'],
+                        recipient=', '.join(contact['emails']),
                         subject=f'AppScan Results: {project['name']}',
                         body='',
                         attachment_path=file_path,

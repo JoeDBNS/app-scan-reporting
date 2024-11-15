@@ -101,11 +101,11 @@ def VerifyConfigFile(config):
                                 issues_found += 1
                                 config_report['projects'][i_proj]['contacts'][i_cont]['name'] = '__BAD__'
 
-                            if (contact['email'] != ''):
-                                config_report['projects'][i_proj]['contacts'][i_cont]['email'] = '__GOOD__'
-                            else:
+                            if (len(contact['emails']) == 0):
                                 issues_found += 1
-                                config_report['projects'][i_proj]['contacts'][i_cont]['email'] = '__BAD__'
+                                config_report['projects'][i_proj]['contacts'][i_cont]['emails'] = '__BAD__'
+                            else:
+                                config_report['projects'][i_proj]['contacts'][i_cont]['emails'] = '__GOOD__'
 
 
         else:
