@@ -1,28 +1,11 @@
-<!-- config file layout -->
-{
-    "smtp": {
-        "host": "",
-        "port": 0,
-        "sender": {
-            "name": "",
-            "email": ""
-        }
-    },
-    "hosts": {
-        "srm": ""
-    },
-    "secret-token": "",
-    "projects": [
-        {
-            "id": 0,
-            "name": "",
-            "contacts": [
-                {
-                    "role": "",
-                    "name": "",
-                    "email": ""
-                }
-            ]
-        }
-    ]
-}
+Setup Tool:
+
+```PowerShell
+Powershell.exe -ExecutionPolicy Bypass -File ".\setup_tool.ps1"
+```
+
+Execute Tool:
+
+```PowerShell
+Powershell.exe -ExecutionPolicy Bypass -File ".\run_reports.ps1"
+```
