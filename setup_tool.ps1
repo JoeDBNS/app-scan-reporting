@@ -49,3 +49,5 @@ else {
     Write-Host "`n"
     Write-Host "'main.json' File Already Exists" -ForegroundColor "Green"
 }
+
+Read-Host "Press Enter to close."
