@@ -26,3 +26,5 @@ Powershell.exe -ExecutionPolicy Bypass -File ".\run_reports.ps1"
   - Charts and Graphs
 - Execution result logs
 - Scheduling reports and schedule management CLI
+- 7zip password protected wrap around file
+- Different types of reports that can be generated based on audience
