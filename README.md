@@ -25,3 +25,4 @@ Powershell.exe -ExecutionPolicy Bypass -File ".\run_reports.ps1"
   - Column filters
   - Charts and Graphs
 - Execution result logs
+- Scheduling reports and schedule management CLI
