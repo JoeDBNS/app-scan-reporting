@@ -78,7 +78,7 @@ if (config != False):
                 con.Error('\033[FERROR:\tSENDING EMAILS')
 
     else:
-        con.Error('\033[FERROR:\tISSUES WITH TOOL SETUP')
+        con.Error('ERROR:\tISSUES WITH TOOL VERIFICATION')
 
 else:
-    con.Error('\033[FERROR:\tLOADING CONFIG FILE')
+    con.Error('ERROR:\tLOADING CONFIG FILE')
