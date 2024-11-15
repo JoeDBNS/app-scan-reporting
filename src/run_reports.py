@@ -20,7 +20,7 @@ def LoadConfigFile():
 def VerifyToolSetup(config):
     issue_count = 0
     issue_count += verify.VerifyConfigFile(config)
-    issue_count += verify.VerifyNetwork()
+    issue_count += verify.VerifyNetwork(config)
 
     if (issue_count == 0):
         return True

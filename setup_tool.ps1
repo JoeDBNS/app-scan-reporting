@@ -11,6 +11,7 @@ $config_text = @'
         }
     },
     "hosts": {
+        "internal-network": "",
         "srm": ""
     },
     "secret-token": "",
