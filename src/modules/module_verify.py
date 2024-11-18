@@ -84,28 +84,33 @@ def VerifyConfigFile(config):
                         issues_found += 1
                         config_report['projects'][i_proj]['name'] = '__BAD__'
 
-                    if (len(project['contacts']) == 0):
+                    if (len(project['reports']) == 0):
                         issues_found += 1
-                        config_report['projects'][i_proj]['contacts'] = '__BAD__'
+                        config_report['projects'][i_proj]['reports'] = '__BAD__'
                     else:
-                        for i_cont, contact in enumerate(project['contacts']):
-                            if (contact['role'] != ''):
-                                config_report['projects'][i_proj]['contacts'][i_cont]['role'] = '__GOOD__'
-                            else:
+                        for i_rport, report in enumerate(project['reports']):
+                            if (len(report['contacts']) == 0):
                                 issues_found += 1
-                                config_report['projects'][i_proj]['contacts'][i_cont]['role'] = '__BAD__'
+                                config_report['projects'][i_proj]['reports'][i_rport]['contacts'] = '__BAD__'
+                            else:
+                                for i_cont, contact in enumerate(report['contacts']):
+                                    if (contact['role'] != ''):
+                                        config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['role'] = '__GOOD__'
+                                    else:
+                                        issues_found += 1
+                                        config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['role'] = '__BAD__'
 
-                            if (contact['name'] != ''):
-                                config_report['projects'][i_proj]['contacts'][i_cont]['name'] = '__GOOD__'
-                            else:
-                                issues_found += 1
-                                config_report['projects'][i_proj]['contacts'][i_cont]['name'] = '__BAD__'
+                                    if (contact['name'] != ''):
+                                        config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['name'] = '__GOOD__'
+                                    else:
+                                        issues_found += 1
+                                        config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['name'] = '__BAD__'
 
-                            if (len(contact['emails']) == 0):
-                                issues_found += 1
-                                config_report['projects'][i_proj]['contacts'][i_cont]['emails'] = '__BAD__'
-                            else:
-                                config_report['projects'][i_proj]['contacts'][i_cont]['emails'] = '__GOOD__'
+                                    if (len(contact['emails']) == 0):
+                                        issues_found += 1
+                                        config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['emails'] = '__BAD__'
+                                    else:
+                                        config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['emails'] = '__GOOD__'
 
 
         else:

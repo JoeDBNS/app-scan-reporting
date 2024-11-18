@@ -1,7 +1,7 @@
 import json, os
 import modules.module_verify as verify
-import scripts.report as report
-import scripts.analytics as analytics
+import scripts.srm_data_handler as srm_data_handler
+import scripts.report_builder as report_builder
 import modules.module_xlsx_maker as xm
 import modules.module_console as con
 import modules.module_email as eml
@@ -44,38 +44,63 @@ if (config != False):
             print('\n')
             con.Info(project['name'])
 
-            findings_worksheet = report.BuildReport(config, project['id'])
-            con.Info('LOAD:\tBUILD ANALYTICS')
-            analytics_worksheet = analytics.BuildAnalytics(findings_worksheet['data'])
-            con.Pass('\033[FDONE\tBUILD ANALYTICS')
-
             wb_content = {
                 'name': 'AVR - ' + project['name'],
-                'sheets': [
-                    analytics_worksheet,
-                    findings_worksheet
-                ]
+                'sheets': []
             }
 
-            con.Info('LOAD:\tBUILDING XLSX')
-            file_path = xm.BuildXlsxFile(wb_content)
-            con.Pass('\033[FDONE\tBUILDING XLSX')
+            con.Info('\tLOAD:\tGET FINDINGS')
+            project_findings = srm_data_handler.GetProjectFindings(config, project['id'])
 
-            con.Info('LOAD:\tSENDING EMAILS')
-            try:
-                for contact in project['contacts']:
-                    eml.SendEmailWithAttachment(
-                        config,
-                        recipient=', '.join(contact['emails']),
-                        subject=f'AppScan Results: {project['name']}',
-                        body='',
-                        attachment_path=file_path,
-                        attachment_name=project['name'] + '.xlsx'
-                    )
-                con.Pass('\033[FDONE\tSENDING EMAILS')
+            if (project_findings != False):
+                con.Pass('\033[F\tDONE\tGET FINDINGS')
 
-            except Exception as error:
-                con.Error('\033[FERROR:\tSENDING EMAILS')
+                if len(project_findings) != 0:
+                    report_count = 0
+                    for report in project['reports']:
+                        if (report_count > 0):
+                            print('')
+
+                        con.Info('\tTYPE:\t' + report['type'])
+
+                        if report['type'] == 'development':
+                            ws_list_build = ['analytics', 'findings_detailed']
+                            wb_content['name'] = 'AVR - ' + project['name'] + ' - detailed'
+                            wb_content['sheets'] = report_builder.BuildReports(config, ws_list_build, project_findings)
+
+                        elif report['type'] == 'executive':
+                            ws_list_build = ['charts', 'findings_simple']
+                            wb_content['name'] = 'AVR - ' + project['name'] + ' - executive'
+                            wb_content['sheets'] = report_builder.BuildReports(config, ws_list_build, project_findings)
+
+                        else:
+                            con.Error('\tERROR:\tINVALID REPORT TYPE - ' + report['type'])
+
+                        if (len(wb_content['sheets']) > 0):
+                            con.Info('\t\tLOAD:\tBUILDING XLSX')
+                            file_path = xm.BuildXlsxFile(wb_content)
+                            con.Pass('\033[F\t\tDONE\tBUILDING XLSX')
+
+                            con.Info('\t\tLOAD:\tSENDING EMAILS')
+                            try:
+                                for contact in report['contacts']:
+                                    eml.SendEmailWithAttachment(
+                                        config,
+                                        recipient=', '.join(contact['emails']),
+                                        subject=f'AppScan Results: {project['name']}',
+                                        body=f'AppScan Report for:\n{project['name']}\n\nReport Type:\n{report['type']}\n\nReport Target:\n{contact['role']}',
+                                        attachment_path=file_path,
+                                        attachment_name=project['name'] + ' - ' + report['type'] + '.xlsx'
+                                    )
+                                con.Pass('\033[F\t\tDONE\tSENDING EMAILS')
+
+                            except Exception as error:
+                                con.Error('\033[F\t\tERROR:\tSENDING EMAILS')
+
+                    report_count += 1
+
+            else:
+                con.Error('\033[F\tERROR:\tGET FINDINGS')
 
     else:
         con.Error('ERROR:\tISSUES WITH TOOL VERIFICATION')
