@@ -1,13 +1,83 @@
-choco -v
+try {
+    choco -v
+    Write-Host "`nChocolately Found" -ForegroundColor Green
 
-# @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+    try {
+        python --version
+        Write-Host "`nPython Found" -ForegroundColor Green
 
-choco install -y python3
+        try {
+            pip install requests
+            pip install openpyxl
+        }
+        catch {
+            Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
+        }
+    }
+    catch {
+        try {
+            choco install -y python3
 
-python --version
+            python --version | Write-Host -ForegroundColor Green
 
-pip install openpyxl
-pip install requests
+            try {
+                pip install requests
+                pip install openpyxl
+            }
+            catch {
+                Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
+            }
+        }
+        catch {
+            Write-Host "`n! - Python Install Error" -ForegroundColor Red
+        }
+    }
+}
+catch {
+    Write-Host "`n! - Chocolately Not Found" -ForegroundColor Red
+
+    try {
+        # https://chocolatey.org/install#individual
+        Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+        try {
+            choco -v
+            Write-Host "`nChocolately Installed Successfully" -ForegroundColor Green
+
+            try {
+                python --version
+                Write-Host "`nPython Found" -ForegroundColor Green
+            }
+            catch {
+                try {
+                    choco install -y python3
+
+                    python --version | Write-Host -ForegroundColor Green
+
+                    try {
+                        pip install requests
+                        pip install openpyxl
+                    }
+                    catch {
+                        Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
+                    }
+                }
+                catch {
+                    Write-Host "`n! - Python Install Error" -ForegroundColor Red
+                }
+            }
+        }
+        catch {
+            Write-Host "`n! - Chocolately Install Failure" -ForegroundColor Red
+        }
+    }
+    catch {
+        Write-Host "`n! - Chocolately Install Error" -ForegroundColor Red
+    }
+}
+
+
+
 
 $config_text = @'
 {
@@ -50,4 +120,4 @@ else {
     Write-Host "'main.json' File Already Exists" -ForegroundColor "Green"
 }
 
-Read-Host "Press Enter to close."
+Read-Host "`n`nPress Enter to close."
