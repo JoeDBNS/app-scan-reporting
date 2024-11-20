@@ -1,4 +1,4 @@
-import json, os
+import json, os, py7zr
 import modules.module_verify as verify
 import scripts.srm_data_handler as srm_data_handler
 import scripts.report_builder as report_builder
@@ -83,19 +83,32 @@ if (config != False):
 
                             con.Info('\t\tLOAD:\tSENDING EMAILS')
                             try:
+                                attachment_base_name = project['name'] + ' - ' + report['type']
+                                attachment_type = ''
+
                                 for contact in report['contacts']:
+                                    if (contact['secure-delivery']['7zip'] == True):
+                                        try:
+                                            with py7zr.SevenZipFile(file_path.replace('.xlsx', '.7z'), 'w', password=contact['secure-delivery']['password']) as archive:
+                                                archive.writeall(file_path, attachment_base_name +'.xlsx')
+                                            attachment_type = '.7z'
+                                        except Exception as error:
+                                            con.Error('\t\tERROR:\t7zip FILES')
+                                    else:
+                                        attachment_type = '.xlsx'
+
                                     eml.SendEmailWithAttachment(
                                         config,
                                         recipient=', '.join(contact['emails']),
                                         subject=f'AppScan Results: {project['name']}',
                                         body=f'AppScan Report for:\n{project['name']}\n\nReport Type:\n{report['type']}\n\nReport Target:\n{contact['role']}',
                                         attachment_path=file_path,
-                                        attachment_name=project['name'] + ' - ' + report['type'] + '.xlsx'
+                                        attachment_name=attachment_base_name + attachment_type
                                     )
                                 con.Pass('\033[F\t\tDONE\tSENDING EMAILS')
 
                             except Exception as error:
-                                con.Error('\033[F\t\tERROR:\tSENDING EMAILS')
+                                con.Error('\t\tERROR:\tSENDING EMAILS')
 
                     report_count += 1
 

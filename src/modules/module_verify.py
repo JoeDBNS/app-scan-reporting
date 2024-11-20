@@ -112,6 +112,25 @@ def VerifyConfigFile(config):
                                     else:
                                         config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['emails'] = '__GOOD__'
 
+                                    if (contact['secure-delivery'] != ''):
+                                        config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['secure-delivery'] = '__GOOD__'
+                                    else:
+                                        issues_found += 1
+                                        config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['secure-delivery'] = '__BAD__'
+
+                                    if (contact['secure-delivery']['7zip'] != ''):
+                                        config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['secure-delivery']['7zip'] = '__GOOD__'
+                                    else:
+                                        issues_found += 1
+                                        config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['secure-delivery']['7zip'] = '__BAD__'
+
+                                    if (contact['secure-delivery']['7zip'] != True):
+                                        if (contact['secure-delivery']['password'] != ''):
+                                            config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['secure-delivery']['password'] = '__GOOD__'
+                                        else:
+                                            issues_found += 1
+                                            config_report['projects'][i_proj]['reports'][i_rport]['contacts'][i_cont]['secure-delivery']['password'] = '__BAD__'
+
 
         else:
             issues_found += 1

@@ -9,6 +9,7 @@ try {
         try {
             pip install requests
             pip install openpyxl
+            pip install py7zr
         }
         catch {
             Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
@@ -23,6 +24,7 @@ try {
             try {
                 pip install requests
                 pip install openpyxl
+                pip install py7zr
             }
             catch {
                 Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
@@ -57,6 +59,7 @@ catch {
                     try {
                         pip install requests
                         pip install openpyxl
+                        pip install py7zr
                     }
                     catch {
                         Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
