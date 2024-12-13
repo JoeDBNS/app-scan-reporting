@@ -28,4 +28,4 @@ Powershell.exe -ExecutionPolicy Bypass -File ".\run_reports.ps1"
 - Scheduling reports and schedule management CLI
 
 ## Possible Features:
-- Translate to PowerShell for greater ability to run from anywhere and without admin rights ([Example Q&A Thread](https://learn.microsoft.com/en-us/answers/questions/1282699/power-shell-script-to-create-excel-file-and-load-d))
+- Translate to NodeJS for greater ability to run from anywhere and without admin rights [excel4node](https://www.npmjs.com/package/excel4node)
