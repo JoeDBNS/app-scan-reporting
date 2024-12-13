@@ -49,6 +49,15 @@ catch {
             try {
                 python --version
                 Write-Host "`nPython Found" -ForegroundColor Green
+
+                try {
+                    pip install requests
+                    pip install openpyxl
+                    pip install py7zr
+                }
+                catch {
+                    Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
+                }
             }
             catch {
                 try {
