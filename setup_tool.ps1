@@ -1,3 +1,23 @@
+function Install-Local-BuildTools {
+    # https://learn.microsoft.com/en-us/answers/questions/192162/visual-studio-build-tools-silent-install
+}
+
+function Install-Local-Choco {
+    # https://chocolatey.org/install#individual
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+}
+
+function Install-Local-Python {
+    choco install -y python3
+}
+
+function Install-Local-Python-Deps {
+    pip install requests
+    pip install openpyxl
+    pip install py7zr
+}
+
+
 try {
     choco -v
     Write-Host "`nChocolately Found" -ForegroundColor Green
@@ -7,9 +27,7 @@ try {
         Write-Host "`nPython Found" -ForegroundColor Green
 
         try {
-            pip install requests
-            pip install openpyxl
-            pip install py7zr
+            Install-Local-Python-Deps
         }
         catch {
             Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
@@ -17,14 +35,12 @@ try {
     }
     catch {
         try {
-            choco install -y python3
+            Install-Local-Python
 
             python --version | Write-Host -ForegroundColor Green
 
             try {
-                pip install requests
-                pip install openpyxl
-                pip install py7zr
+                Install-Local-Python-Deps
             }
             catch {
                 Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
@@ -39,8 +55,7 @@ catch {
     Write-Host "`n! - Chocolately Not Found" -ForegroundColor Red
 
     try {
-        # https://chocolatey.org/install#individual
-        Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+        Install-Local-Choco
 
         try {
             choco -v
@@ -51,9 +66,7 @@ catch {
                 Write-Host "`nPython Found" -ForegroundColor Green
 
                 try {
-                    pip install requests
-                    pip install openpyxl
-                    pip install py7zr
+                    Install-Local-Python-Deps
                 }
                 catch {
                     Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
@@ -61,14 +74,12 @@ catch {
             }
             catch {
                 try {
-                    choco install -y python3
+                    Install-Local-Python
 
                     python --version | Write-Host -ForegroundColor Green
 
                     try {
-                        pip install requests
-                        pip install openpyxl
-                        pip install py7zr
+                        Install-Local-Python-Deps
                     }
                     catch {
                         Write-Host "`n! - pip Dependency Install Errors" -ForegroundColor Red
