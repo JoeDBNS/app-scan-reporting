@@ -108,17 +108,25 @@ $config_text = @'
     "secret-token": "",
     "projects": [
         {
-            "id": 0,
-            "name": "",
-            "contacts": [
-                {
-                    "role": "",
-                    "name": "",
-                    "emails": []
-                }
-            ]
-        }
-    ]
+        "id": 0,
+        "name": "",
+        "reports": [
+            {
+                "type": "",
+                "contacts": [
+                    {
+                        "role": "",
+                        "name": "",
+                        "emails": [],
+                        "secure-delivery": {
+                            "7zip": false,
+                            "password": ""
+                        }
+                    }
+                ]
+            }
+        ]
+    }
 }
 '@
 
