@@ -6,21 +6,25 @@ def BuildWorksheetAnalytics(data):
     con.Info('\t\tLOAD:\tBUILD ANALYTICS')
     analytics_build = {
         'totals': {
+            'Critical': 0,
             'High': 0,
             'Medium': 0,
             'Low': 0
         },
         'dynamic': {
+            'Critical': 0,
             'High': 0,
             'Medium': 0,
             'Low': 0
         },
         'static': {
+            'Critical': 0,
             'High': 0,
             'Medium': 0,
             'Low': 0
         },
         'component': {
+            'Critical': 0,
             'High': 0,
             'Medium': 0,
             'Low': 0
@@ -30,25 +34,30 @@ def BuildWorksheetAnalytics(data):
     for row in data:
         analytics_build[row['simpleDetectionType']][row['severity']['name']] += 1
 
+    analytics_build['totals']['Critical'] = analytics_build['dynamic']['Critical'] + analytics_build['static']['Critical'] + analytics_build['component']['Critical']
     analytics_build['totals']['High'] = analytics_build['dynamic']['High'] + analytics_build['static']['High'] + analytics_build['component']['High']
     analytics_build['totals']['Medium'] = analytics_build['dynamic']['Medium'] + analytics_build['static']['Medium'] + analytics_build['component']['Medium']
     analytics_build['totals']['Low'] = analytics_build['dynamic']['Low'] + analytics_build['static']['Low'] + analytics_build['component']['Low']
 
     analytics = [
         ['Totals'],
+        ['', 'Critical', analytics_build['totals']['Critical']],
         ['', 'High', analytics_build['totals']['High']],
         ['', 'Medium', analytics_build['totals']['Medium']],
         ['', 'Low', analytics_build['totals']['Low']],
         ['Scan Types'],
         ['', 'Dynamic'],
+        ['', '', 'Critical', analytics_build['dynamic']['Critical']],
         ['', '', 'High', analytics_build['dynamic']['High']],
         ['', '', 'Medium', analytics_build['dynamic']['Medium']],
         ['', '', 'Low', analytics_build['dynamic']['Low']],
         ['', 'Static'],
+        ['', '', 'Critical', analytics_build['static']['Critical']],
         ['', '', 'High', analytics_build['static']['High']],
         ['', '', 'Medium', analytics_build['static']['Medium']],
         ['', '', 'Low', analytics_build['static']['Low']],
         ['', 'Component'],
+        ['', '', 'Critical', analytics_build['component']['Critical']],
         ['', '', 'High', analytics_build['component']['High']],
         ['', '', 'Medium', analytics_build['component']['Medium']],
         ['', '', 'Low', analytics_build['component']['Low']]
@@ -168,7 +177,9 @@ def BuildWorksheetFindingsSimple(data):
 
         severity_field_index = 1
 
-        if (finding[severity_field_index] == 'High'):
+        if (finding[severity_field_index] == 'Critical'):
+            set_color = '9c0e1a' # dark red
+        elif (finding[severity_field_index] == 'High'):
             set_color = 'f54842' # red
         elif (finding[severity_field_index] == 'Medium'):
             set_color = 'f57842' # orange
@@ -284,7 +295,9 @@ def BuildWorksheetFindingsDetailed(config, data):
 
         severity_field_index = 2
 
-        if (finding[severity_field_index] == 'High'):
+        if (finding[severity_field_index] == 'Critical'):
+            set_color = '9c0e1a' # dark red
+        elif (finding[severity_field_index] == 'High'):
             set_color = 'f54842' # red
         elif (finding[severity_field_index] == 'Medium'):
             set_color = 'f57842' # orange
