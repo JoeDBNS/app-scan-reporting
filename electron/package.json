@@ -1,0 +1,15 @@
+{
+    "name": "app-scan-reporting",
+    "version": "1.0.0",
+    "description": "Data aggregation and reporting tool",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "debug": "electron --trace-warnings ."
+    },
+    "author": "Joseph Davis",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^33.2.1"
+    }
+}
