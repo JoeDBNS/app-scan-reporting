@@ -7,10 +7,7 @@ def GetProjectFindings(config, project_id):
 
         project_request_data = {
             'filter': {
-                'severity': ['Critical', 'High', 'Medium', 'Low'],
-                'findingStatus': ['none', 'reopened']
-                # 'triageStatus': ['none', 'reopened']
-                # [None, 'false-positive', 'fixed', 'ignored', 'to-be-fixed', 'reopened']
+                'severity': ['Critical', 'High', 'Medium', 'Low']
             },
             'sort': {
                 'by': 'severity',
@@ -31,4 +28,27 @@ def GetProjectFindings(config, project_id):
     except Exception as error:
         project_response_data = False
 
-    return project_response_data
+    return FilterProjectFindings(project_response_data)
+
+
+def FilterProjectFindings(data):
+    filtered_data = []
+    excluded_status_list = [
+        # None,
+        'false-positive',
+        'fixed',
+        'ignored',
+        # 'to-be-fixed',
+        # 'reopened'
+    ]
+
+    for row in data:
+        add_row = True
+
+        if row['status'] in excluded_status_list:
+            add_row = False
+
+        if add_row == True:
+            filtered_data.append(row)
+
+    return filtered_data
