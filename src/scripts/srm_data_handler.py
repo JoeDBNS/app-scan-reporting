@@ -7,7 +7,10 @@ def GetProjectFindings(config, project_id):
 
         project_request_data = {
             'filter': {
-                'severity': ['Critical', 'High', 'Medium', 'Low']
+                'severity': ['Critical', 'High', 'Medium', 'Low'],
+                'findingStatus': ['none', 'reopened']
+                # 'triageStatus': ['none', 'reopened']
+                # [None, 'false-positive', 'fixed', 'ignored', 'to-be-fixed', 'reopened']
             },
             'sort': {
                 'by': 'severity',
