@@ -93,10 +93,23 @@ def SetColumnColors(wb, sheet_content):
                 wb[sheet_content['name']][col.coordinate].fill = PatternFill(start_color=row_colors[i], end_color=row_colors[i], fill_type='solid')
 
 
+def SetColumnFilters(wb, sheet_content):
+    filter_columns = []
+
+    for i, column in enumerate(sheet_content['config']['columns']):
+        if column['filter'] == True:
+            filter_columns.append(i)
+
+    if len(filter_columns) > 0:
+        filters = wb[sheet_content['name']].auto_filter
+        filters.ref = wb[sheet_content['name']].dimensions
+
+
 def ConfigureWorksheet(wb, sheet_content):
     SetColumnHyperlinks(wb, sheet_content)
     SetColumnSizes(wb, sheet_content)
     SetColumnColors(wb, sheet_content)
+    SetColumnFilters(wb, sheet_content)
 
 
 def SaveFile(wb, name):

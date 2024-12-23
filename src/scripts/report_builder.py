@@ -132,13 +132,13 @@ def BuildWorksheetFindingsSimple(data):
                 {
                     'label': 'severity',
                     'size': 0,
-                    'filter': False,
+                    'filter': True,
                     'is_link': False
                 },
                 {
                     'label': 'type',
                     'size': 0,
-                    'filter': False,
+                    'filter': True,
                     'is_link': False
                 },
                 {
@@ -238,19 +238,19 @@ def BuildWorksheetFindingsDetailed(config, data):
                 {
                     'label': 'severity',
                     'size': 0,
-                    'filter': False,
+                    'filter': True,
                     'is_link': False
                 },
                 {
                     'label': 'type',
                     'size': 0,
-                    'filter': False,
+                    'filter': True,
                     'is_link': False
                 },
                 {
                     'label': 'tool',
                     'size': 0,
-                    'filter': False,
+                    'filter': True,
                     'is_link': False
                 },
                 {
