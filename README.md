@@ -22,7 +22,6 @@ Powershell.exe -ExecutionPolicy Bypass -File ".\run_reports.ps1"
 ## Planned Features:
 - Management CLI for config file
 - .xlsx improvements
-  - Column filters
   - Charts and Graphs
 - Execution result logs
 - Scheduling reports and schedule management CLI
