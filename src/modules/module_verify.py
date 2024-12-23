@@ -5,10 +5,10 @@ import modules.module_console as con
 def VerifyNetwork(config):
     issues_found = 0
 
-    connected_network = str(subprocess.check_output("powershell.exe (get-netconnectionProfile).Name", shell=True).strip()).replace('\'', '').split("\\n")
+    connected_network = str(subprocess.check_output("powershell.exe (get-netconnectionProfile).Name", shell=True).strip()).replace('b\'', '').replace('\'', '').replace('\\r', '').split("\\n")
 
     if (config['hosts']['internal-network'] not in connected_network):
-        con.Error('\nNOT ON SOM NETWORK')
+        con.Error('\nNOT ON SOM NETWORK: "', connected_network, '"')
         issues_found += 1
 
     return issues_found
