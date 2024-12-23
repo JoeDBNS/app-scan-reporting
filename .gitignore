@@ -4,6 +4,7 @@
 !/_reports/.gitkeep
 
 /src/config/*.json
+/src/config/*.backup
 
 __pycache__
 
