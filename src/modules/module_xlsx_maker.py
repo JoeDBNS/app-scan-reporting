@@ -88,7 +88,6 @@ def SetColumnColors(wb, sheet_content):
         row_colors[color_def['row_num']] = color_def['color_hex']
 
     for i, row in enumerate(wb[sheet_content['name']].rows):
-
         if (i in row_colors_ids):
             for col in row:
                 wb[sheet_content['name']][col.coordinate].fill = PatternFill(start_color=row_colors[i], end_color=row_colors[i], fill_type='solid')
