@@ -3,7 +3,7 @@
 
 
 
-import os, datetime as dt
+import os, datetime as dt, xlwings as xw
 from openpyxl import Workbook
 from openpyxl.worksheet.filters import (
     FilterColumn,
@@ -110,14 +110,28 @@ def SaveFile(wb, name):
     # YYYYMMDD
     timestamp_today = str(dt.date.today()).replace('-', '')
 
-    reports_path = './_reports/' + timestamp_today
+    reports_path_folder = './_reports/' + timestamp_today
+    reports_path_full = reports_path_folder + '/' + name + '.xlsx'
 
-    if not os.path.exists(reports_path):
-        os.makedirs(reports_path)
+    if not os.path.exists(reports_path_folder):
+        os.makedirs(reports_path_folder)
 
-    wb.save(reports_path + '/' + name + '.xlsx')
+    wb.save(reports_path_full)
 
-    return (reports_path + '/' + name + '.xlsx')
+    SetFileSensitivity(reports_path_full)
+
+    return (reports_path_full)
+
+
+def SetFileSensitivity(path):
+    with xw.App(visible=False) as app:
+        wb = xw.Book(r'' + path)
+        labelinfo = wb.api.SensitivityLabel.CreateLabelInfo()
+        labelinfo.AssignmentMethod = 2
+        labelinfo.Justification = 'init'
+        labelinfo.LabelId = '8d9a96da-8c99-48d2-98a8-390ae3accb03'
+        wb.api.SensitivityLabel.SetLabel(labelinfo, labelinfo)
+        wb.save(path)
 
 
 def BuildXlsxFile(wb_content):
