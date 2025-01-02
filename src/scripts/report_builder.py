@@ -9,7 +9,10 @@ def BuildWorksheetAnalytics(data):
             'Critical': 0,
             'High': 0,
             'Medium': 0,
-            'Low': 0
+            'Low': 0,
+            'dynamic': 0,
+            'static': 0,
+            'component': 0
         },
         'dynamic': {
             'Critical': 0,
@@ -38,13 +41,22 @@ def BuildWorksheetAnalytics(data):
     analytics_build['totals']['High'] = analytics_build['dynamic']['High'] + analytics_build['static']['High'] + analytics_build['component']['High']
     analytics_build['totals']['Medium'] = analytics_build['dynamic']['Medium'] + analytics_build['static']['Medium'] + analytics_build['component']['Medium']
     analytics_build['totals']['Low'] = analytics_build['dynamic']['Low'] + analytics_build['static']['Low'] + analytics_build['component']['Low']
+    analytics_build['totals']['dynamic'] = analytics_build['dynamic']['Low'] + analytics_build['dynamic']['Medium'] + analytics_build['dynamic']['High'] + analytics_build['dynamic']['Critical']
+    analytics_build['totals']['static'] = analytics_build['static']['Low'] + analytics_build['static']['Medium'] + analytics_build['static']['High'] + analytics_build['static']['Critical']
+    analytics_build['totals']['component'] = analytics_build['component']['Low'] + analytics_build['component']['Medium'] + analytics_build['component']['High'] + analytics_build['component']['Critical']
 
     analytics = [
         ['Totals'],
-        ['', 'Critical', analytics_build['totals']['Critical']],
-        ['', 'High', analytics_build['totals']['High']],
-        ['', 'Medium', analytics_build['totals']['Medium']],
-        ['', 'Low', analytics_build['totals']['Low']],
+        ['', 'Severity'],
+        ['', '', 'Critical', analytics_build['totals']['Critical']],
+        ['', '', 'High', analytics_build['totals']['High']],
+        ['', '', 'Medium', analytics_build['totals']['Medium']],
+        ['', '', 'Low', analytics_build['totals']['Low']],
+        ['', 'Tool'],
+        ['', '', 'Dynamic', analytics_build['totals']['dynamic']],
+        ['', '', 'Static', analytics_build['totals']['static']],
+        ['', '', 'Component', analytics_build['totals']['component']],
+        [''],
         ['Scan Types'],
         ['', 'Dynamic'],
         ['', '', 'Critical', analytics_build['dynamic']['Critical']],
