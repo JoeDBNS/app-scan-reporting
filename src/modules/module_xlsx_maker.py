@@ -7,7 +7,7 @@ import os, datetime as dt, xlwings as xw
 from openpyxl import Workbook
 from openpyxl.worksheet.filters import (
     FilterColumn,
-    Filters,
+    Filters
 )
 from openpyxl.styles import (
     Alignment,
