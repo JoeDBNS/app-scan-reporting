@@ -23,9 +23,11 @@ Powershell.exe -ExecutionPolicy Bypass -File ".\run_reports.ps1"
 - Management CLI for config file
 - .xlsx improvements
   - Charts and Graphs
+    - Pie chart for finding tool
+    - Pie chart for finding severity
+    - Line graph for date found
 - Execution result logs
 - Scheduling reports and schedule management CLI
-- Add filtering to search to exclude results already marked as resolved in some way
 
 ## Possible Features:
 - Translate to NodeJS for greater ability to run from anywhere and without admin rights [excel4node](https://www.npmjs.com/package/excel4node)
