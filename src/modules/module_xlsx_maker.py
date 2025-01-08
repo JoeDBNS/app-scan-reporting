@@ -13,6 +13,13 @@ from openpyxl.styles import (
     Alignment,
     PatternFill
 )
+from openpyxl.chart import (
+    PieChart,
+    ProjectedPieChart,
+    Reference,
+    Series
+)
+from openpyxl.chart.series import DataPoint
 
 
 
@@ -99,11 +106,52 @@ def SetColumnFilters(wb, sheet_content):
         filters.ref = wb[sheet_content['name']].dimensions
 
 
+# WIP - DOES NOT WORK - and likely cannot go here as this needs to happen more when the document is compiled
+def BuildWorksheetCharts(wb, sheet_content):
+    datas = [
+        ['Pie', 'Sold'],
+        ['Apple', 50],
+        ['Cherry', 30],
+        ['Pumpkin', 10],
+        ['Chocolate', 40],
+    ]
+
+    # write content of each row in 1st, 2nd and 3rd
+    # column of the active sheet respectively .
+    for row in datas:
+        wb[sheet_content['name']].append(row)
+
+    # Create object of PieChart class
+    chart = PieChart()
+
+    # create data for plotting
+    labels = Reference(wb[sheet_content['name']], min_col = 1, min_row = 2, max_row = 5)
+
+    data = Reference(wb[sheet_content['name']], min_col = 2, min_row = 1, max_row = 5)
+
+    # adding data to the Pie chart object
+    chart.add_data(data, titles_from_data = True)
+
+    # set labels in the chart object
+    chart.set_categories(labels)
+
+    # set the title of the chart
+    chart.title = " PIE-CHART "
+
+    # add chart to the sheet
+    # the top-left corner of a chart
+    # is anchored to cell E2.
+    wb[sheet_content['name']].add_chart(chart, "E2")
+
+
 def ConfigureWorksheet(wb, sheet_content):
     SetColumnHyperlinks(wb, sheet_content)
     SetColumnSizes(wb, sheet_content)
     SetColumnColors(wb, sheet_content)
     SetColumnFilters(wb, sheet_content)
+
+    # if sheet_content['config']['general']['has_charts'] == True:
+    #     BuildWorksheetCharts(wb, sheet_content)
 
 
 def SaveFile(wb, name):
