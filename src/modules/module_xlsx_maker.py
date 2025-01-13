@@ -166,7 +166,7 @@ def SaveFile(wb, name):
 
     wb.save(reports_path_full)
 
-    SetFileSensitivity(reports_path_full)
+    # SetFileSensitivity(reports_path_full)
 
     return (reports_path_full)
 
