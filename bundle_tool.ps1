@@ -5,4 +5,6 @@ pyinstaller ./src/run_reports.py --name "appscan_srm_reporting" --distpath "./bu
 
 New-Item -Name "src/config" -Path "./bundle/_dist/" -ItemType Directory
 
+New-Item -Name "logs" -Path "./bundle/_dist/" -ItemType Directory
+
 Copy-Item "./src/config/main.json" -Destination "./bundle/_dist/src/config"
