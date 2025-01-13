@@ -1,3 +1,15 @@
+import logging, datetime as dt
+
+timestamp_now = dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S_%f')
+log_file_hdlr = logging.FileHandler('./logs/{}.log'.format(timestamp_now))
+
+logging.basicConfig(
+    filename = "./logs/" + timestamp_now + ".log",
+    encoding = "utf-8",
+    filemode = "a",
+    level = logging.INFO
+)
+
 class style():
     END      = '\33[0m'
 
@@ -57,15 +69,19 @@ def Test():
 
 def Info(content):
     print(style.WHITE + content + style.END)
+    logging.info(content)
 
 
 def Pass(content):
     print(style.GREEN + content + style.END)
+    logging.info(content)
 
 
 def Warn(content):
     print(style.YELLOW + content + style.END)
+    logging.warning(content)
 
 
 def Error(content):
     print(style.RED + content + style.END)
+    logging.error(content)
