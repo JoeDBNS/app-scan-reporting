@@ -8,7 +8,7 @@ def VerifyNetwork(config):
     connected_network = str(subprocess.check_output("powershell.exe (get-netconnectionProfile).Name", shell=True).strip()).replace('b\'', '').replace('\'', '').replace('\\r', '').split("\\n")
 
     if (config['hosts']['internal-network'] not in connected_network):
-        con.Error('\nNOT ON SOM NETWORK: "', connected_network, '"')
+        con.Error('\nNOT ON SOM NETWORK: "' + str(connected_network) + '"')
         issues_found += 1
 
     return issues_found
