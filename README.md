@@ -3,10 +3,10 @@
 
 ## Run Scripts
 
-### Setup Tool:
+### Load Dependencies:
 
 ``` PowerShell
-Powershell.exe -ExecutionPolicy Bypass -File ".\setup_tool.ps1"
+Powershell.exe -ExecutionPolicy Bypass -File ".\setup_dev.ps1"
 ```
 
 ### Execute Tool:
