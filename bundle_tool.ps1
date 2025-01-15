@@ -16,11 +16,10 @@ if ($preClean -eq $True) {
 # https://pyinstaller.org/en/stable/usage.html
 pyinstaller ./src/run_reports.py --name "appscan_srm_reporting" --distpath $dirDist --workpath $dirWork --specpath $dirSpec --onefile --noconfirm
 
-New-Item -Name "src/config" -Path $dirDist + "/" -ItemType Directory
+New-Item -Name "src/config" -Path ($dirDist + "/") -ItemType Directory
+New-Item -Name "logs" -Path ($dirDist + "/") -ItemType Directory
 
-New-Item -Name "logs" -Path $dirDist + "/" -ItemType Directory
-
-Copy-Item "./src/config/main.json" -Destination $dirDist + "/src/config"
+Copy-Item "./src/config/main.json" -Destination ($dirDist + "/src/config")
 
 if ($postClean -eq $True) {
     Remove-Item -Path $dirWork -Recurse
