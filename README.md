@@ -18,7 +18,7 @@ Powershell.exe -ExecutionPolicy Bypass -File ".\run_reports.ps1"
 ### Compile Tool as .exe:
 
 ``` PowerShell
-Powershell.exe -ExecutionPolicy Bypass -File ".\bundle_tool.ps1" --postClean $True
+Powershell.exe -ExecutionPolicy Bypass -File ".\bundle_tool.ps1" --postClean $True --buildZip $True
 ```
 
 
