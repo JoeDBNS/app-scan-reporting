@@ -1,10 +1,10 @@
 import logging, datetime as dt
 
 timestamp_now = dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S_%f')
-log_file_hdlr = logging.FileHandler('./logs/{}.log'.format(timestamp_now))
+log_file_hdlr = logging.FileHandler('./_logs/{}.log'.format(timestamp_now))
 
 logging.basicConfig(
-    filename = "./logs/" + timestamp_now + ".log",
+    filename = "./_logs/" + timestamp_now + ".log",
     encoding = "utf-8",
     filemode = "a",
     level = logging.INFO

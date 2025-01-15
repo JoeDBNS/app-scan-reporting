@@ -21,7 +21,7 @@ if ($preClean) {
 pyinstaller ./src/run_reports.py --name $projectName --distpath $dirDist --workpath $dirWork --specpath $dirSpec --onefile --noconfirm
 
 New-Item -Name "src/config" -Path ($dirDist + "/") -ItemType Directory
-New-Item -Name "logs" -Path ($dirDist + "/") -ItemType Directory
+New-Item -Name "_logs" -Path ($dirDist + "/") -ItemType Directory
 
 if (Test-Path -Path "./src/config/main.json") {
     Copy-Item "./src/config/main.json" -Destination ($dirDist + "/src/config")
@@ -42,7 +42,7 @@ if ($postClean) {
 
 if ($buildZip) {
     # Compress-Archive ignores empty folders.
-    New-Item -Path ($dirDist + "/logs") -Name ".keep" -ItemType "file" -Value ""
+    New-Item -Path ($dirDist + "/_logs") -Name ".keep" -ItemType "file" -Value ""
 
     $compress = @{
         Path = ($dirDist + "/*")
