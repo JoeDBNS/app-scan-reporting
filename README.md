@@ -34,6 +34,3 @@ Powershell.exe -ExecutionPolicy Bypass -File ".\bundle_tool.ps1" --postClean $Tr
     - Line graph for date found
 - Execution result logs
 - Scheduling reports and schedule management CLI
-
-## Possible Features:
-- Translate to NodeJS for greater ability to run from anywhere and without admin rights [excel4node](https://www.npmjs.com/package/excel4node)
