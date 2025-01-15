@@ -1,6 +1,6 @@
 param (
-    [string] $preClean = $True,
-    [string] $postClean = $False
+    [switch] $preClean = $True,
+    [switch] $postClean = $False
 )
 
 $dirBundle = "./bundle"
