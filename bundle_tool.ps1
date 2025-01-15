@@ -11,8 +11,10 @@ $dirWork = $dirBundle + "/tmp"
 $dirSpec = $dirBundle + "/spec"
 
 
-if ($preClean -eq $True) {
-    Remove-Item -Path $dirBundle -Recurse
+if (Test-Path -Path $dirBundle) {
+    if ($preClean -eq $True) {
+        Remove-Item -Path $dirBundle -Recurse
+    }
 }
 
 # https://pyinstaller.org/en/stable/usage.html
