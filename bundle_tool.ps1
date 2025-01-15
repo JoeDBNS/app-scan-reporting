@@ -26,6 +26,12 @@ New-Item -Name "logs" -Path ($dirDist + "/") -ItemType Directory
 Copy-Item "./src/config/main.json" -Destination ($dirDist + "/src/config")
 
 if ($postClean) {
+    if (Test-Path -Path $dirWork) {
+        Remove-Item -Path $dirWork -Recurse
+    }
+    if (Test-Path -Path $dirSpec) {
+        Remove-Item -Path $dirSpec -Recurse
+    }
 }
 
 if ($buildZip) {
