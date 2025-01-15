@@ -1,5 +1,5 @@
 param (
-    [switch] $preClean = $True,
+    [switch] $preClean = $False,
     [switch] $postClean = $False,
     [switch] $buildZip = $False
 )
@@ -11,8 +11,8 @@ $dirWork = $dirBundle + "/tmp"
 $dirSpec = $dirBundle + "/spec"
 
 
-if (Test-Path -Path $dirBundle) {
-    if ($preClean -eq $True) {
+if ($preClean) {
+    if (Test-Path -Path $dirBundle) {
         Remove-Item -Path $dirBundle -Recurse
     }
 }
@@ -25,12 +25,10 @@ New-Item -Name "logs" -Path ($dirDist + "/") -ItemType Directory
 
 Copy-Item "./src/config/main.json" -Destination ($dirDist + "/src/config")
 
-if ($postClean -eq $True) {
-    Remove-Item -Path $dirWork -Recurse
-    Remove-Item -Path $dirSpec -Recurse
+if ($postClean) {
 }
 
-if ($buildZip -eq $True) {
+if ($buildZip) {
     # Compress-Archive ignores empty folders.
     New-Item -Path ($dirDist + "/logs") -Name ".keep" -ItemType "file" -Value ""
 
