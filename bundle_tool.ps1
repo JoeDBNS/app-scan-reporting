@@ -23,7 +23,13 @@ pyinstaller ./src/run_reports.py --name $projectName --distpath $dirDist --workp
 New-Item -Name "src/config" -Path ($dirDist + "/") -ItemType Directory
 New-Item -Name "logs" -Path ($dirDist + "/") -ItemType Directory
 
-Copy-Item "./src/config/main.json" -Destination ($dirDist + "/src/config")
+if (Test-Path -Path "./src/config/main.json") {
+    Copy-Item "./src/config/main.json" -Destination ($dirDist + "/src/config")
+}
+else {
+    Write-Output "main.json file not found."
+}
+
 
 if ($postClean) {
     if (Test-Path -Path $dirWork) {
