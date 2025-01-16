@@ -91,6 +91,7 @@ if (config != False):
                                         try:
                                             with py7zr.SevenZipFile(file_path.replace('.xlsx', '.7z'), 'w', password=contact['secure-delivery']['password']) as archive:
                                                 archive.writeall(file_path, attachment_base_name + '.xlsx')
+                                            file_path = file_path.replace('.xlsx', '.7z')
                                             attachment_type = '.7z'
                                         except Exception as error:
                                             con.Error('\t\tERROR:\t7zip FILES')
