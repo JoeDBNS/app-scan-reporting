@@ -18,6 +18,6 @@ Switch ($pathChoice)
         Write-Host "!! - admin - !!"
     }
     "reports" {
-        Write-Host "!! - reports - !!"
+        python './src/run_reports.py'
     }
 }
