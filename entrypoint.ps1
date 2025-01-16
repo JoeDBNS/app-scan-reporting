@@ -15,7 +15,7 @@ while (-not ($pathChoice -in $pathOptions)) {
 Switch ($pathChoice)
 {
     "admin" {
-        Write-Host "!! - admin - !!"
+        python './src/run_admin.py'
     }
     "reports" {
         python './src/run_reports.py'
