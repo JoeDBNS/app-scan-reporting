@@ -81,7 +81,32 @@ def BuildWorksheetAnalytics(data):
             'general': {
                 'add_headers': False
             },
-            'columns': [],
+            'columns': [
+                {
+                    'label': '',
+                    'size': 0,
+                    'filter': False,
+                    'is_link': False
+                },
+                {
+                    'label': '',
+                    'size': 13,
+                    'filter': False,
+                    'is_link': False
+                },
+                {
+                    'label': '',
+                    'size': 13,
+                    'filter': False,
+                    'is_link': False
+                },
+                {
+                    'label': '',
+                    'size': 0,
+                    'filter': False,
+                    'is_link': False
+                }
+            ],
             'rows': {
                 'colors': []
             }
