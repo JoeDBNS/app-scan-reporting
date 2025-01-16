@@ -33,3 +33,5 @@ Powershell.exe -ExecutionPolicy Bypass -File ".\bundle_tool.ps1" --preClean --po
     - Pie chart for finding severity
     - Line graph for date found
 - Scheduling reports and schedule management CLI
+- Improve CLI use with tools like curses or pick [pypi.org/project/pick](https://pypi.org/project/pick/)
+  - Additional resources here ([github.com/shadawck/awesome-cli-frameworks](https://github.com/shadawck/awesome-cli-frameworks?tab=readme-ov-file#python))
