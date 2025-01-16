@@ -9,10 +9,10 @@
 Powershell.exe -ExecutionPolicy Bypass -File ".\setup_dev.ps1"
 ```
 
-### Execute Tool:
+### Execute Reporting Tool:
 
 ``` PowerShell
-Powershell.exe -ExecutionPolicy Bypass -File ".\run_reports.ps1"
+Powershell.exe -ExecutionPolicy Bypass -File ".\entrypoint.ps1" --pathChoice "reports"
 ```
 
 ### Compile Tool as .exe:
