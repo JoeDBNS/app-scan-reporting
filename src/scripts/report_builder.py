@@ -243,6 +243,7 @@ def BuildWorksheetFindingsDetailed(config, data):
         project_findings_flat.append([
             config['hosts']['srm'] + '/projects/' + str(row['projectId']) + '/findings/' + str(row['id']),
             row['id'],
+            row['projectName'],
             row['severity']['name'],
             row['simpleDetectionType'],
             row['results'][0]['tool'],
@@ -270,6 +271,12 @@ def BuildWorksheetFindingsDetailed(config, data):
                     'label': 'id',
                     'size': 0,
                     'filter': False,
+                    'is_link': False
+                },
+                {
+                    'label': 'Project',
+                    'size': 0,
+                    'filter': True,
                     'is_link': False
                 },
                 {
@@ -330,7 +337,7 @@ def BuildWorksheetFindingsDetailed(config, data):
     for i, finding in enumerate(ws_content['data'], start = 1):
         set_color = 'ffffff' # white
 
-        severity_field_index = 2
+        severity_field_index = 3
 
         if (finding[severity_field_index] == 'Critical'):
             set_color = '9c0e1a' # dark red
