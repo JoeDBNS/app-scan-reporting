@@ -15,6 +15,7 @@ function Install-Local-Python-Deps {
     pip install requests
     pip install openpyxl
     pip install py7zr
+    pip install pick
 }
 
 

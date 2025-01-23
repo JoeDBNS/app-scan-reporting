@@ -1,4 +1,4 @@
-import json, os
+import json, os, pick
 import modules.module_console as con
 
 
@@ -22,14 +22,14 @@ config = LoadConfigFile()
 if (config != False):
     con.Pass('Config File Loaded')
 
-    action_options = ['build', 'edit', 'view']
-    action_choice = input('\nDo you want to run [build], [edit], or [view] your config file? ').lower().strip()
+    action_options = ['Build', 'Edit', 'View']
+    action_choice, action_choice_index = pick.pick(action_options, '\nDo you want to Build, Edit, or View your config file? ')
 
     while (action_choice not in action_options):
         print('invalid entry')
         action_choice = input('\n\nDo you want to run [view] or [edit] your config file? ').lower().strip()
 
-    if (action_choice == 'view'):
+    if (action_choice == 'View'):
         print()
         print('smtp:', json.dumps(json.loads(str(config['smtp']).replace('\'', '"')), indent=4))
         print('\nhosts:', json.dumps(json.loads(str(config['hosts']).replace('\'', '"')), indent=4))
@@ -57,7 +57,7 @@ if (config != False):
                     print()
                 print()
 
-    elif (action_choice == 'build'):
+    elif (action_choice == 'Build'):
         print()
         email_sender_name = input('Email Display Name:\t').strip()
         email_sender_email = input('Email Address:\t\t').strip()
@@ -94,7 +94,7 @@ if (config != False):
             projects.append(new_project)
             projects_choice = input('\nDo you want to add another project? (y/n) ').lower().strip()
 
-    elif (action_choice == 'edit'):
+    elif (action_choice == 'Edit'):
         print()
         print('edit')
 
