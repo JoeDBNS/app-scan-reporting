@@ -16,6 +16,7 @@ function Install-Local-Python-Deps {
     pip install openpyxl
     pip install py7zr
     pip install pick
+    pip install yaspin
 }
 
 

@@ -1,4 +1,5 @@
 import json, os, py7zr
+from yaspin import yaspin
 import modules.module_verify as verify
 import scripts.srm_data_handler as srm_data_handler
 import scripts.report_builder as report_builder
@@ -50,7 +51,9 @@ if (config != False):
             }
 
             con.Info('\tLOAD:\tGET FINDINGS')
-            project_findings = srm_data_handler.GetProjectFindings(config, project['id'])
+
+            with yaspin(text="\tLoading..."):
+                project_findings = srm_data_handler.GetProjectFindings(config, project['id'])
 
             if (project_findings != False):
                 con.Pass('\033[F\tDONE\tGET FINDINGS')
