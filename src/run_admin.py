@@ -30,32 +30,32 @@ if (config != False):
         action_choice = input('\n\nDo you want to run [view] or [edit] your config file? ').lower().strip()
 
     if (action_choice == 'View'):
-        print()
-        print('smtp:', json.dumps(json.loads(str(config['smtp']).replace('\'', '"')), indent=4))
-        print('\nhosts:', json.dumps(json.loads(str(config['hosts']).replace('\'', '"')), indent=4))
-        print('\nsecret-token:', '"' + config['secret-token'] + '"')
-        print('\nprojects:')
+        con.Info('\n\n\n--------------------------------------------------------------------------------------------------------\n\n\n')
+        con.Info('smtp: ' +  json.dumps(json.loads(str(config['smtp']).replace('\'', '"')), indent=4))
+        con.Info('\nhosts: ' + json.dumps(json.loads(str(config['hosts']).replace('\'', '"')), indent=4))
+        con.Info('\nsecret-token: ' + '"' + config['secret-token'] + '"')
+        con.Info('\nprojects:')
 
         for project in config['projects']:
-            print()
-            print('\tid:', '"' + str(project['id']) + '"')
-            print('\tname:', '"' + project['name'] + '"')
-            print('\treports:')
+            con.Info('')
+            con.Info('\tid: ' + '"' + str(project['id']) + '"')
+            con.Info('\tname: ' + '"' + project['name'] + '"')
+            con.Info('\treports:')
 
             for report in project['reports']:
-                print('\t\ttype:', '"' + report['type'] + '"')
-                print('\t\tcontacts:')
+                con.Info('\t\ttype: ' + '"' + report['type'] + '"')
+                con.Info('\t\tcontacts:')
 
                 for contact in report['contacts']:
-                    print('\t\t\trole:', '"' + contact['role'] + '"')
-                    print('\t\t\tname:', '"' + contact['name'] + '"')
-                    print('\t\t\temails:')
+                    con.Info('\t\t\trole: ' + '"' + contact['role'] + '"')
+                    con.Info('\t\t\tname: ' + '"' + contact['name'] + '"')
+                    con.Info('\t\t\temails:')
 
                     for email in contact['emails']:
-                        print('\t\t\t\t' + '"' + email + '"')
+                        con.Info('\t\t\t\t' + '"' + email + '"')
 
-                    print()
-                print()
+                    con.Info('')
+                con.Info('')
 
     elif (action_choice == 'Build'):
         print()
