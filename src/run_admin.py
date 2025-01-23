@@ -12,6 +12,34 @@ def LoadConfigFile():
         return False
 
 
+def PrintConfigContents(config):
+    con.Info('smtp: ' +  json.dumps(json.loads(str(config['smtp']).replace('\'', '"')), indent=4))
+    con.Info('\nhosts: ' + json.dumps(json.loads(str(config['hosts']).replace('\'', '"')), indent=4))
+    con.Info('\nsecret-token: ' + '"' + config['secret-token'] + '"')
+    con.Info('\nprojects:')
+
+    for project in config['projects']:
+        con.Info('')
+        con.Info('\tid: ' + '"' + str(project['id']) + '"')
+        con.Info('\tname: ' + '"' + project['name'] + '"')
+        con.Info('\treports:')
+
+        for report in project['reports']:
+            con.Info('\t\ttype: ' + '"' + report['type'] + '"')
+            con.Info('\t\tcontacts:')
+
+            for contact in report['contacts']:
+                con.Info('\t\t\trole: ' + '"' + contact['role'] + '"')
+                con.Info('\t\t\tname: ' + '"' + contact['name'] + '"')
+                con.Info('\t\t\temails:')
+
+                for email in contact['emails']:
+                    con.Info('\t\t\t\t' + '"' + email + '"')
+
+                con.Info('')
+            con.Info('')
+
+
 # Required to initialize escape characters in terminal
 os.system('')
 
@@ -23,39 +51,11 @@ if (config != False):
     con.Pass('Config File Loaded')
 
     action_options = ['Build', 'Edit', 'View']
-    action_choice, action_choice_index = pick.pick(action_options, '\nDo you want to Build, Edit, or View your config file? ')
-
-    while (action_choice not in action_options):
-        print('invalid entry')
-        action_choice = input('\n\nDo you want to run [view] or [edit] your config file? ').lower().strip()
+    action_choice, action_choice_index = pick.pick(action_options, '\nDo you want to Build, Edit, or View your config file?')
 
     if (action_choice == 'View'):
         con.Info('\n\n\n--------------------------------------------------------------------------------------------------------\n\n\n')
-        con.Info('smtp: ' +  json.dumps(json.loads(str(config['smtp']).replace('\'', '"')), indent=4))
-        con.Info('\nhosts: ' + json.dumps(json.loads(str(config['hosts']).replace('\'', '"')), indent=4))
-        con.Info('\nsecret-token: ' + '"' + config['secret-token'] + '"')
-        con.Info('\nprojects:')
-
-        for project in config['projects']:
-            con.Info('')
-            con.Info('\tid: ' + '"' + str(project['id']) + '"')
-            con.Info('\tname: ' + '"' + project['name'] + '"')
-            con.Info('\treports:')
-
-            for report in project['reports']:
-                con.Info('\t\ttype: ' + '"' + report['type'] + '"')
-                con.Info('\t\tcontacts:')
-
-                for contact in report['contacts']:
-                    con.Info('\t\t\trole: ' + '"' + contact['role'] + '"')
-                    con.Info('\t\t\tname: ' + '"' + contact['name'] + '"')
-                    con.Info('\t\t\temails:')
-
-                    for email in contact['emails']:
-                        con.Info('\t\t\t\t' + '"' + email + '"')
-
-                    con.Info('')
-                con.Info('')
+        PrintConfigContents(config)
 
     elif (action_choice == 'Build'):
         print()
@@ -63,36 +63,43 @@ if (config != False):
         email_sender_email = input('Email Address:\t\t').strip()
         secret_token = input('SRM Secret Token:\t').strip()
 
-        projects_choice = input('\nDo you want to add a project? (y/n) ').lower().strip()
+
+        yesno_action_options = ['Yes', 'No']
+
+        project_action_choice, project_action_choice_index = pick.pick(yesno_action_options, '\nDo you want to add a project?')
+
         projects = []
 
-        while (projects_choice == 'y'):
+        while (project_action_choice == 'Yes'):
             new_project = {}
-            new_project_id = input('Project Id: ').strip()
+            new_project_id = input('\nProject Id: ').strip()
             new_project_name = input('Project Name: ').strip()
 
-            contacts_choice = 'y'
+            contacts_action_choice = 'Yes'
             contacts = []
 
-            while (contacts_choice == 'y'):
+            while (contacts_action_choice == 'Yes'):
                 new_contact = {}
-                new_contact_role = input('Contact Role: ').strip()
-                new_contact_name = input('Contact Name: ').strip()
+                new_contact_role = input('\n\tContact Role: ').strip()
+                new_contact_name = input('\tContact Name: ').strip()
 
-                emails_choice = 'y'
+                emails_action_choice = 'Yes'
                 emails = []
 
-                while (emails_choice == 'y'):
-                    new_email = input('Email Address: ').strip()
+                while (emails_action_choice == 'Yes'):
+                    new_email = input('\t\tEmail Address: ').strip()
 
                     emails.append(new_email)
-                    emails_choice = input('\nDo you want to add another email? (y/n) ').lower().strip()
+                    emails_action_choice, emails_action_choice_index = pick.pick(yesno_action_options, '\nDo you want to add another email?')
 
                 contacts.append(new_contact)
-                contacts_choice = input('\nDo you want to add another contact? (y/n) ').lower().strip()
+                contacts_action_choice, contacts_action_choice_index = pick.pick(yesno_action_options, '\nDo you want to add another contact?')
 
             projects.append(new_project)
-            projects_choice = input('\nDo you want to add another project? (y/n) ').lower().strip()
+            project_action_choice, project_action_choice_index = pick.pick(yesno_action_options, '\nDo you want to add another project?')
+
+        con.Info('\n\n\n--------------------------------------------------------------------------------------------------------\n\n\n')
+        PrintConfigContents(config)
 
     elif (action_choice == 'Edit'):
         print()
