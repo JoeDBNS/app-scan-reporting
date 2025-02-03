@@ -2,6 +2,18 @@ param (
     [string] $pathChoice = ""
 )
 
+
+Write-Host @"
+
+ _____          _____         _____           _____
+|   __|        |  _  |       | __  |         |   __|
+|   __|        |     |       |    -|         |__   |
+|_____|xtended |__|__|ppScan |__|__|eporting |_____|uite
+
+--------------------------------------------------------
+"@ -ForegroundColor Green
+
+
 $pathOptions = @("admin", "reports")
 
 while (-not ($pathChoice -in $pathOptions)) {
