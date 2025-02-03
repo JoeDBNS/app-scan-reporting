@@ -1,5 +1,15 @@
-# AppScan-SRM-Reporting
+````
+ _____          _____         _____           _____
+|   __|        |  _  |       | __  |         |   __|
+|   __|        |     |       |    -|         |__   |
+|_____|xtended |__|__|ppScan |__|__|eporting |_____|uite
+````
 
+
+# Extended AppScan Reporting Suite
+
+&nbsp;
+&nbsp;
 
 ## Run Scripts
 

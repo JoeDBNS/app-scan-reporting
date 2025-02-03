@@ -62,7 +62,7 @@ if (config != False):
             con.Info(project['name'])
 
             wb_content = {
-                'name': 'AVR - ' + project['name'],
+                'name': 'EARS - ' + project['name'],
                 'sheets': []
             }
 
@@ -84,12 +84,12 @@ if (config != False):
 
                         if report['type'] == 'development':
                             ws_list_build = ['analytics', 'findings_detailed']
-                            wb_content['name'] = 'AVR - ' + project['name'] + ' - detailed'
+                            wb_content['name'] = 'EARS - ' + project['name'] + ' - detailed'
                             wb_content['sheets'] = report_builder.BuildReports(config, ws_list_build, project_findings)
 
                         elif report['type'] == 'executive':
                             ws_list_build = ['charts', 'findings_simple']
-                            wb_content['name'] = 'AVR - ' + project['name'] + ' - executive'
+                            wb_content['name'] = 'EARS - ' + project['name'] + ' - executive'
                             wb_content['sheets'] = report_builder.BuildReports(config, ws_list_build, project_findings)
 
                         else:

@@ -4,7 +4,7 @@ param (
     [switch] $buildZip = $False
 )
 
-$projectName = "appscan_srm_reporting"
+$projectName = "Extended_AppScan_Reporting_Suite"
 $dirBundle = "./bundle"
 $dirDist = $dirBundle + "/_dist"
 $dirWork = $dirBundle + "/tmp"
