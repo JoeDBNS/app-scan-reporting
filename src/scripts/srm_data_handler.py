@@ -61,6 +61,7 @@ def GetProjectFindings(config, project_id):
     project_findings_per_page = 2500
     project_findings_total_pages = math.ceil(project_findings_count / project_findings_per_page)
     project_findings_data = []
+    project_findings_data_filtered = []
 
     for i in range(project_findings_total_pages):
         try:
@@ -93,8 +94,9 @@ def GetProjectFindings(config, project_id):
             con.Error(error)
             project_response_data = False
 
-        project_findings_data_filtered = FilterProjectFindings(project_findings_data)
-        project_findings_data_filtered = SetProjectNames(config, project_findings_data)
+        if (len(project_findings_data) > 0):
+            project_findings_data_filtered = FilterProjectFindings(project_findings_data)
+            project_findings_data_filtered = SetProjectNames(config, project_findings_data)
 
     return project_findings_data_filtered
 
