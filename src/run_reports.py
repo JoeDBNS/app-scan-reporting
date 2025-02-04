@@ -119,16 +119,46 @@ if (config != False):
 
                                     eml.SendEmailWithAttachment(
                                         config,
-                                        recipient=', '.join(contact['emails']),
-                                        subject=f'AppScan Results: {project['name']}',
-                                        body=f'AppScan Report for:\n{project['name']}\n\nReport Type:\n{report['type']}\n\nReport Target:\n{contact['role']}',
+                                        recipients=contact['emails'],
+                                        subject=f'Extended Appscan Reporting Suite: {project['name']}',
+                                        body=f"""
+                                        <html>
+                                            <body style="background-color:rgb(30, 30, 30);">
+                                                <h1 style="font-size:22px;color:#33ff67;margin-bottom:8px;">
+                                                    Extended AppScan Reporting Suite
+                                                </h1>
+
+                                                <p style="color:white;">
+                                                    <span style="font-size:14px;">AppScan Report for:</span>
+                                                    <br>
+                                                    <span style="font-weight:bold;">{project['name']}</span>
+                                                </p>
+                                                <p style="color:white;">
+                                                    <span style="font-size:14px;">Report Type:</span>
+                                                    <br>
+                                                    <span style="font-weight:bold;">{report['type']}</span>
+                                                </p>
+                                                <p style="color:white;">
+                                                    <span style="font-size:14px;">Report Target:</span>
+                                                    <br>
+                                                    <span style="font-weight:bold;">{contact['role']}</span>
+                                                </p>
+                                                <br>
+                                                <p>
+                                                    <span style="font-size:20px;color:red;">⁉️</span><br>
+                                                    <span style="font-size:40px;">🖥️</span><br>
+                                                    <span style="font-size:32px;">⌨️</span><span style="font-size:20px;">🖱️</span>
+                                                </p>
+                                            </body>
+                                        </html>
+                                        """,
                                         attachment_path=file_path,
                                         attachment_name=attachment_base_name + attachment_type
                                     )
                                 con.Pass('\033[F\t\tDONE\tSENDING EMAILS')
 
                             except Exception as error:
-                                con.Error('\t\tERROR:\tSENDING EMAILS')
+                                con.Error('\t\tERROR:\tSENDING EMAILS\n' + str(error))
 
                     report_count += 1
 

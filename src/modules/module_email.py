@@ -1,21 +1,35 @@
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
-from email.utils import formataddr
+import base64
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import (
+    Mail, Attachment, FileContent, FileName, Disposition
+)
 
 
-def SendEmailWithAttachment(config, recipient, subject, body, attachment_path, attachment_name):
-    message = MIMEMultipart()
-    message['Subject'] = subject
-    message['To'] = recipient
-    message['From'] = formataddr((config['smtp']['sender']["name"], config['smtp']['sender']["email"]))
+def SendEmailWithAttachment(config, recipients, subject, body, attachment_path, attachment_name):
+    message = Mail(
+        from_email = (config['smtp']['sender']['email'], config['smtp']['sender']['name']),
+        to_emails = recipients,
+        subject = subject,
+        html_content = body
+    )
 
-    body_part = MIMEText(body)
-    message.attach(body_part)
+    file_path = attachment_path
+    with open(file_path, 'rb') as f:
+        data = f.read()
+        f.close()
 
-    with open(attachment_path, 'rb') as file:
-        message.attach(MIMEApplication(file.read(), Name=attachment_name))
+    encoded = base64.b64encode(data).decode()
 
-    with smtplib.SMTP(config['smtp']['host'], config['smtp']['port']) as server:
-        server.send_message(message)
+    attachment = Attachment()
+    attachment.file_content = FileContent(encoded)
+    attachment.file_name = FileName(attachment_name)
+    attachment.disposition = Disposition('attachment')
+
+    message.attachment = attachment
+
+    try:
+        sendgrid_client = SendGridAPIClient(config['smtp']['api_key'])
+        response = sendgrid_client.send(message)
+
+    except Exception as e:
+        print(e.message)
