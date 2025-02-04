@@ -143,12 +143,6 @@ if (config != False):
                                                     <br>
                                                     <span style="font-weight:bold;">{contact['role']}</span>
                                                 </p>
-                                                <br>
-                                                <p>
-                                                    <span style="font-size:20px;color:red;">⁉️</span><br>
-                                                    <span style="font-size:40px;">🖥️</span><br>
-                                                    <span style="font-size:32px;">⌨️</span><span style="font-size:20px;">🖱️</span>
-                                                </p>
                                             </body>
                                         </html>
                                         """,
