@@ -108,8 +108,7 @@ catch {
 $config_text = @'
 {
     "smtp": {
-        "host": "",
-        "port": 0,
+        "api_key": "",
         "sender": {
             "name": "",
             "email": ""
@@ -122,25 +121,26 @@ $config_text = @'
     "secret-token": "",
     "projects": [
         {
-        "id": 0,
-        "name": "",
-        "reports": [
-            {
-                "type": "",
-                "contacts": [
-                    {
-                        "role": "",
-                        "name": "",
-                        "emails": [],
-                        "secure-delivery": {
-                            "7zip": false,
-                            "password": ""
+            "id": "",
+            "name": "",
+            "reports": [
+                {
+                    "type": "development",
+                    "contacts": [
+                        {
+                            "role": "",
+                            "name": "",
+                            "emails": [],
+                            "secure-delivery": {
+                                "7zip": false,
+                                "password": ""
+                            }
                         }
-                    }
-                ]
-            }
-        ]
-    }
+                    ]
+                }
+            ]
+        }
+    ]
 }
 '@
 
