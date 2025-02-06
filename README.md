@@ -9,7 +9,6 @@
 # Extended AppScan Reporting Suite
 
 &nbsp;
-&nbsp;
 
 ## Run Scripts
 
@@ -31,12 +30,13 @@ Powershell.exe -ExecutionPolicy Bypass -File ".\entrypoint.ps1" --pathChoice "re
 Powershell.exe -ExecutionPolicy Bypass -File ".\bundle_tool.ps1" --preClean --postClean --buildZip
 ```
 
-
-
+&nbsp;
 
 
 ## Planned Features:
 - Management CLI for config file
+- Refine column filtering code
+- Add cell borders to improve look of analytics page
 - .xlsx improvements
   - Charts and Graphs
     - Pie chart for finding tool
