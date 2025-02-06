@@ -134,14 +134,14 @@ if (config != False):
                                                     <span style="font-weight:bold;">{project['name']}</span>
                                                 </p>
                                                 <p style="color:white;">
-                                                    <span style="font-size:14px;">Report Type:</span>
-                                                    <br>
-                                                    <span style="font-weight:bold;">{report['type']}</span>
-                                                </p>
-                                                <p style="color:white;">
                                                     <span style="font-size:14px;">Report Target:</span>
                                                     <br>
                                                     <span style="font-weight:bold;">{contact['role']}</span>
+                                                </p>
+                                                <p style="color:white;">
+                                                    <span style="font-size:14px;">Report Type:</span>
+                                                    <br>
+                                                    <span style="font-weight:bold;">{report['type']}</span>
                                                 </p>
                                             </body>
                                         </html>
