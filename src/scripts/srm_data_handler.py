@@ -96,7 +96,7 @@ def GetProjectFindings(config, project_id):
 
         if (len(project_findings_data) > 0):
             project_findings_data_filtered = FilterProjectFindings(project_findings_data)
-            project_findings_data_filtered = SetProjectNames(config, project_findings_data)
+            project_findings_data_filtered = SetProjectNames(config, project_findings_data_filtered)
 
     return project_findings_data_filtered
 
@@ -111,11 +111,17 @@ def FilterProjectFindings(data):
         # 'to-be-fixed',
         # 'reopened'
     ]
+    excluded_finding_status_list = [
+        'gone'
+    ]
 
     for row in data:
         add_row = True
 
         if row['status'] in excluded_status_list:
+            add_row = False
+
+        if row['findingStatus']['id'] in excluded_finding_status_list:
             add_row = False
 
         if add_row == True:
