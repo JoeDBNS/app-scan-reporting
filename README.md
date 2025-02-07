@@ -35,9 +35,9 @@ Powershell.exe -ExecutionPolicy Bypass -File ".\bundle_tool.ps1" --preClean --po
 
 ## Planned Features:
 - Management CLI for config file
-- Refine column filtering code
-- Add cell borders to improve look of analytics page
 - .xlsx improvements
+  - Refine column filtering code
+  - Add cell borders to improve look of analytics page
   - Charts and Graphs
     - Pie chart for finding tool
     - Pie chart for finding severity
