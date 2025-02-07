@@ -15,11 +15,9 @@ from openpyxl.styles import (
 )
 from openpyxl.chart import (
     PieChart,
-    ProjectedPieChart,
-    Reference,
-    Series
+    Reference
 )
-from openpyxl.chart.series import DataPoint
+from openpyxl.drawing.spreadsheet_drawing import TwoCellAnchor
 
 
 
@@ -197,6 +195,41 @@ def BuildXlsxFile(wb_content):
             for column_config in sheet_content['config']['columns']:
                 header_data.append(column_config['label'])
             ws.append(header_data)
+
+        if (sheet_content['config']['general']['has_charts'] == True):
+            pie = PieChart()
+            labels = Reference(ws, min_col = 1, min_row = 2, max_row = 5)
+            data = Reference(ws, min_col = 2, min_row = 1, max_row = 5)
+            pie.add_data(data, titles_from_data=True)
+            pie.set_categories(labels)
+            pie.title = "Findings by Severity"
+
+            anchor = TwoCellAnchor()
+            anchor._from.col = 3
+            anchor._from.row = 0
+            anchor.to.col = 9
+            anchor.to.row = 11
+
+            pie.anchor = anchor
+
+            ws.add_chart(pie)
+
+            pie = PieChart()
+            labels = Reference(ws, min_col = 4, min_row = 4, max_row = 4)
+            data = Reference(ws, min_col = 6, min_row = 6, max_row = 4)
+            pie.add_data(data, titles_from_data=True)
+            pie.set_categories(labels)
+            pie.title = "Findings by Source"
+
+            anchor = TwoCellAnchor()
+            anchor._from.col = 10
+            anchor._from.row = 0
+            anchor.to.col = 15
+            anchor.to.row = 11
+
+            pie.anchor = anchor
+
+            ws.add_chart(pie)
 
         for row in sheet_content['data']:
             ws.append(row)

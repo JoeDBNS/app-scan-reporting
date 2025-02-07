@@ -79,7 +79,8 @@ def BuildWorksheetAnalytics(data):
         'name': 'Analytics',
         'config': {
             'general': {
-                'add_headers': False
+                'add_headers': False,
+                'has_charts': False
             },
             'columns': [
                 {
@@ -119,21 +120,84 @@ def BuildWorksheetAnalytics(data):
 
 
 def BuildWorksheetCharts(data):
+    con.Info('\t\tLOAD:\tBUILD ANALYTICS')
+    analytics_build = {
+        'totals': {
+            'Critical': 0,
+            'High': 0,
+            'Medium': 0,
+            'Low': 0,
+            'dynamic': 0,
+            'static': 0,
+            'component': 0
+        },
+        'dynamic': {
+            'Critical': 0,
+            'High': 0,
+            'Medium': 0,
+            'Low': 0
+        },
+        'static': {
+            'Critical': 0,
+            'High': 0,
+            'Medium': 0,
+            'Low': 0
+        },
+        'component': {
+            'Critical': 0,
+            'High': 0,
+            'Medium': 0,
+            'Low': 0
+        }
+    }
+
+    for row in data:
+        analytics_build[row['simpleDetectionType']][row['severity']['name']] += 1
+
+    analytics_build['totals']['Critical'] = analytics_build['dynamic']['Critical'] + analytics_build['static']['Critical'] + analytics_build['component']['Critical']
+    analytics_build['totals']['High'] = analytics_build['dynamic']['High'] + analytics_build['static']['High'] + analytics_build['component']['High']
+    analytics_build['totals']['Medium'] = analytics_build['dynamic']['Medium'] + analytics_build['static']['Medium'] + analytics_build['component']['Medium']
+    analytics_build['totals']['Low'] = analytics_build['dynamic']['Low'] + analytics_build['static']['Low'] + analytics_build['component']['Low']
+    analytics_build['totals']['dynamic'] = analytics_build['dynamic']['Low'] + analytics_build['dynamic']['Medium'] + analytics_build['dynamic']['High'] + analytics_build['dynamic']['Critical']
+    analytics_build['totals']['static'] = analytics_build['static']['Low'] + analytics_build['static']['Medium'] + analytics_build['static']['High'] + analytics_build['static']['Critical']
+    analytics_build['totals']['component'] = analytics_build['component']['Low'] + analytics_build['component']['Medium'] + analytics_build['component']['High'] + analytics_build['component']['Critical']
+    con.Pass('\033[F\t\tDONE\tBUILD ANALYTICS')
+
     con.Info('\t\tLOAD:\tBUILD CHARTS')
+    charts_data = [
+        [''],
+        ['Critical', analytics_build['totals']['Critical']],
+        ['High', analytics_build['totals']['High']],
+        ['Medium', analytics_build['totals']['Medium']],
+        ['Low', analytics_build['totals']['Low']],
+        [''],
+        ['Dynamic', analytics_build['totals']['dynamic']],
+        ['Static', analytics_build['totals']['static']],
+        ['Component', analytics_build['totals']['component']],
+    ]
+    con.Pass('\033[F\t\tDONE\tBUILD CHARTS')
+
     ws_content = {
         'name': 'Charts',
         'config': {
             'general': {
-                'add_headers': False
+                'add_headers': False,
+                'has_charts': True
             },
-            'columns': [],
+            'columns': [
+                {
+                    'label': '',
+                    'size': 13,
+                    'filter': False,
+                    'is_link': False
+                }
+            ],
             'rows': {
                 'colors': []
             }
         },
-        'data': []
+        'data': charts_data
     }
-    con.Pass('\033[F\t\tDONE\tBUILD CHARTS')
 
     return ws_content
 
@@ -157,7 +221,8 @@ def BuildWorksheetFindingsSimple(data):
         'name': 'Findings',
         'config': {
             'general': {
-                'add_headers': True
+                'add_headers': True,
+                'has_charts': False
             },
             'columns': [
                 {
@@ -258,7 +323,8 @@ def BuildWorksheetFindingsDetailed(config, data):
         'name': 'Findings',
         'config': {
             'general': {
-                'add_headers': True
+                'add_headers': True,
+                'has_charts': False
             },
             'columns': [
                 {
